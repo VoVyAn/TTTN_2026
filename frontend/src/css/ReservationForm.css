@@ -1,0 +1,388 @@
+/* Reservation Page Wrapper */
+.reservation-page {
+  background-color: #dfdad4;
+  color: #352e27;
+  min-height: calc(100vh - 80px);
+  /* header height is 80px */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 2rem;
+  box-sizing: border-box;
+}
+
+.reservation-split-container {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  width: 100%;
+  max-width: 1200px;
+  min-height: 550px;
+  background: transparent;
+  gap: 3rem;
+  align-items: stretch;
+}
+
+/* Media Column (Left) */
+.reservation-media-column {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  background: #f0ebe4;
+  position: relative;
+  min-height: 400px;
+}
+
+.reservation-media-column iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+/* Form Column (Right) */
+.reservation-form-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 1rem 0;
+}
+
+.reservation-main-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-align: center;
+  color: #2b2724;
+  margin-bottom: 1.5rem;
+  margin-top: 0;
+}
+
+/* Summary Pill Bar */
+.reservation-summary-pill {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: white;
+  padding: 0.75rem 1rem;
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+  margin-bottom: 2rem;
+}
+
+.summary-pill-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #4b453f;
+}
+
+.pill-icon-img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  display: inline-block;
+}
+
+/* Step Content */
+.step-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  animation: fadeIn 0.4s ease;
+}
+
+.step-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2b2724;
+  margin: 0 0 0.5rem 0;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Form Elements */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #352e27;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  padding: 0.75rem 1rem;
+  border: 1px solid #d4cdc5;
+  border-radius: 5px;
+  font-size: 0.95rem;
+  background: white;
+  color: #333;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #7d7265;
+  box-shadow: 0 0 0 2px rgba(125, 114, 101, 0.1);
+}
+
+.form-group input.error,
+.form-group textarea.error {
+  border-color: #c0392b;
+}
+
+.error-message {
+  color: #c0392b;
+  font-size: 0.8rem;
+  margin-top: 0.1rem;
+}
+
+.disabled-input {
+  background-color: #f7f5f2 !important;
+  color: #7d7265 !important;
+  cursor: not-allowed;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+/* Buttons */
+.action-btn {
+  background: #352e27;
+  color: white;
+  padding: 0.85rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  font-family: inherit;
+}
+
+.action-btn:hover {
+  background: #25201b;
+}
+
+.action-btn:disabled {
+  background: #a8a097;
+  cursor: not-allowed;
+}
+
+.next-btn {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.button-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+.prev-btn {
+  background: #6e655c;
+}
+
+.prev-btn:hover {
+  background: #564e47;
+}
+
+.submit-error {
+  background: #fbeee8;
+  color: #c0392b;
+  padding: 0.75rem;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+/* Success UI */
+.success-page-wrapper {
+  background-color: #dfdad4;
+  color: #352e27;
+  min-height: calc(100vh - 80px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 2rem;
+  box-sizing: border-box;
+}
+
+.success-container {
+  width: 100%;
+  max-width: 600px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.success-card {
+  background: white;
+  border-radius: 12px;
+  padding: 2.5rem;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.success-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+}
+
+.success-card h2 {
+  color: #2b2724;
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.success-card p {
+  color: #6e655c;
+  margin-bottom: 2rem;
+}
+
+.booking-summary {
+  background: #f7f5f2;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.booking-summary h3 {
+  color: #352e27;
+  font-size: 1.15rem;
+  margin-bottom: 1.25rem;
+  text-align: center;
+  border-bottom: 1px solid #e5e0d9;
+  padding-bottom: 0.75rem;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e5e0d9;
+}
+
+.summary-item:last-child {
+  border-bottom: none;
+}
+
+.summary-label {
+  font-weight: 600;
+  color: #6e655c;
+}
+
+.summary-value {
+  color: #352e27;
+  font-weight: 500;
+}
+
+.new-booking-btn {
+  background: #352e27;
+  color: white;
+  padding: 0.85rem 2rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.new-booking-btn:hover {
+  background: #25201b;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .reservation-split-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .reservation-media-column {
+    min-height: 350px;
+  }
+
+  .reservation-main-title {
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .reservation-page,
+  .success-page-wrapper {
+    padding: 1.5rem 1rem;
+    min-height: auto;
+  }
+
+  .reservation-split-container {
+    gap: 1.5rem;
+  }
+
+  .reservation-media-column {
+    min-height: 250px;
+    border-radius: 8px;
+  }
+
+  .reservation-main-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .reservation-summary-pill {
+    padding: 0.6rem 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .summary-pill-item {
+    font-size: 0.85rem;
+  }
+
+  .step-title {
+    font-size: 1.1rem;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .button-group {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .success-card {
+    padding: 1.5rem;
+  }
+}
