@@ -5,14 +5,10 @@ export const LanguageContext = createContext();
 export const useLanguage = () => useContext(LanguageContext);
 
 export const LanguageProvider = ({ children }) => {
-  const [lang, setLang] = useState('EN'); // Default to EN based on Navbar default
-
-  useEffect(() => {
+  const [lang, setLang] = useState(() => {
     const savedLang = localStorage.getItem('language');
-    if (savedLang && (savedLang === 'EN' || savedLang === 'VN')) {
-      setLang(savedLang);
-    }
-  }, []);
+    return (savedLang === 'EN' || savedLang === 'VN') ? savedLang : 'EN';
+  });
 
   const changeLang = (newLang) => {
     setLang(newLang);

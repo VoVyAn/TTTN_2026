@@ -116,7 +116,7 @@ function AdminMenuPanels() {
                 <td>{item.title}</td>
                 <td>{item.theme}</td>
                 <td>{item.isInfo ? 'Thông tin' : 'Ảnh'}</td>
-                <td>{item.lang}</td>
+                <td>{item.lang === 'BOTH' ? 'Cả hai' : item.lang}</td>
                 <td>{item.sortOrder}</td>
                 <td>
                   <button type="button" className="btn-small" onClick={() => openModal(item)}>Sửa</button>
@@ -181,7 +181,17 @@ function AdminMenuPanels() {
                   <select value={form.lang} onChange={(e) => setForm({ ...form, lang: e.target.value })}>
                     <option value="VN">Tiếng Việt</option>
                     <option value="EN">English</option>
+                    <option value="BOTH">Cả hai ngôn ngữ</option>
                   </select>
+                  <div style={{ marginTop: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <input 
+                      type="checkbox" 
+                      id="langBothPanel" 
+                      checked={form.lang === 'BOTH'}
+                      onChange={(e) => setForm({ ...form, lang: e.target.checked ? 'BOTH' : 'VN' })}
+                    />
+                    <label htmlFor="langBothPanel" style={{ margin: 0, fontWeight: 'normal' }}>Hiển thị cho cả 2 ngôn ngữ</label>
+                  </div>
                 </div>
                 <div className="admin-form-group">
                   <label>Thứ tự</label>

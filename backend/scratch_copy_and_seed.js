@@ -127,18 +127,18 @@ Through this special menu, both restaurants wanted to convey the diversity and f
 console.log("📡 Connecting to MongoDB Atlas...");
 mongoose.connect(MONGODB_URI)
   .then(async () => {
-    console.log("✅ Connected to MongoDB.");
+    console.log("Connected to MongoDB.");
     
-    console.log("🧹 Clearing old events...");
+    console.log("Clearing old events...");
     await Event.deleteMany({});
     
-    console.log("🌱 Inserting new events...");
+    console.log("Inserting new events...");
     await Event.insertMany(newEventsData);
     
-    console.log("🎉 Database seeded successfully with new events!");
+    console.log("Database seeded successfully with new events!");
     process.exit(0);
   })
   .catch(err => {
-    console.error("❌ MongoDB connection error:", err);
+    console.error("MongoDB connection error:", err);
     process.exit(1);
   });

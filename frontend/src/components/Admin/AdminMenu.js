@@ -38,7 +38,7 @@ function AdminMenu() {
     fetchMenu();
   }, [fetchMenu]);
 
-  const categoriesForLang = categories.filter((c) => c.lang === formData.lang);
+  const categoriesForLang = formData.lang === 'BOTH' ? categories : categories.filter((c) => c.lang === formData.lang || c.lang === 'BOTH');
 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
@@ -102,15 +102,10 @@ function AdminMenu() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.category) {
-      alert('Vui lòng chọn danh mục. Tạo danh mục trước nếu chưa có.');
-      return;
-    }
     const payload = {
       name: formData.name.trim(),
       price: Number(formData.price),
       description: formData.description.trim(),
-      category: formData.category,
       lang: formData.lang,
       image: formData.image
     };
@@ -159,7 +154,6 @@ function AdminMenu() {
             <tr>
               <th>Ảnh</th>
               <th>Tên món</th>
-              <th>Danh mục</th>
               <th>Giá</th>
               <th>Ngôn ngữ</th>
               <th>Hành động</th>
@@ -176,9 +170,8 @@ function AdminMenu() {
                   )}
                 </td>
                 <td>{item.name}</td>
-                <td>{item.category}</td>
                 <td>{Number(item.price).toLocaleString()}đ</td>
-                <td>{item.lang}</td>
+                <td>{item.lang === 'BOTH' ? 'Cả hai' : item.lang}</td>
                 <td>
                   <button className="btn-small" onClick={() => handleOpenModal(item)}>Sửa</button>
                   <button className="btn-small btn-delete" onClick={() => handleDelete(item._id)}>Xóa</button>
@@ -187,7 +180,7 @@ function AdminMenu() {
             ))}
             {menuItems.length === 0 && (
               <tr>
-                <td colSpan="6" style={{ textAlign: 'center' }}>Chưa có món nào</td>
+                <td colSpan="5" style={{ textAlign: 'center' }}>Chưa có món nào</td>
               </tr>
             )}
           </tbody>
@@ -258,27 +251,19 @@ function AdminMenu() {
                 <select value={formData.lang} onChange={(e) => handleLangChange(e.target.value)}>
                   <option value="VN">Tiếng Việt</option>
                   <option value="EN">Tiếng Anh</option>
+                  <option value="BOTH">Cả hai (Tiếng Việt & Tiếng Anh)</option>
                 </select>
+                <div style={{ marginTop: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <input 
+                    type="checkbox" 
+                    id="langBoth" 
+                    checked={formData.lang === 'BOTH'}
+                    onChange={(e) => handleLangChange(e.target.checked ? 'BOTH' : 'VN')}
+                  />
+                  <label htmlFor="langBoth" style={{ margin: 0, fontWeight: 'normal' }}>Hiển thị cho cả 2 ngôn ngữ</label>
+                </div>
               </div>
-              <div className="admin-form-group">
-                <label>Danh mục</label>
-                {categoriesForLang.length > 0 ? (
-                  <select
-                    value={formData.category}
-                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    required
-                  >
-                    <option value="">-- Chọn danh mục --</option>
-                    {categoriesForLang.map((cat) => (
-                      <option key={cat._id} value={cat.name}>{cat.name}</option>
-                    ))}
-                  </select>
-                ) : (
-                  <p className="admin-hint">
-                    Chưa có danh mục cho ngôn ngữ này. Vui lòng thêm tại mục Quản lý Danh mục.
-                  </p>
-                )}
-              </div>
+
               <div className="admin-form-group">
                 <label>Mô tả (không bắt buộc)</label>
                 <textarea

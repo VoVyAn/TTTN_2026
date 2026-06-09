@@ -171,7 +171,7 @@ function AdminSetMenus() {
   return (
     <div>
       <div className="admin-header">
-        <h1>Quản lý Setmenu</h1>
+        <h1>Quản lý Menu</h1>
         <button type="button" className="admin-btn" style={{ width: 'auto', padding: '10px 20px' }} onClick={() => openModal()}>
           + Thêm SET MENU
         </button>
@@ -261,7 +261,7 @@ function AdminSetMenus() {
               <tr key={item._id}>
                 <td>{item.title}</td>
                 <td>{item.isImageOnly ? 'Chỉ hiển thị ảnh' : 'Dàn trang text'}</td>
-                <td>{item.lang}</td>
+                <td>{item.lang === 'BOTH' ? 'Cả hai' : item.lang}</td>
                 <td>{item.sortOrder}</td>
                 <td>
                   <button type="button" className="btn-small" onClick={() => openModal(item)}>Sửa</button>
@@ -353,7 +353,17 @@ function AdminSetMenus() {
                   <select value={form.lang} onChange={(e) => setForm({ ...form, lang: e.target.value })}>
                     <option value="VN">Tiếng Việt</option>
                     <option value="EN">English</option>
+                    <option value="BOTH">Cả hai ngôn ngữ</option>
                   </select>
+                  <div style={{ marginTop: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <input 
+                      type="checkbox" 
+                      id="langBoth" 
+                      checked={form.lang === 'BOTH'}
+                      onChange={(e) => setForm({ ...form, lang: e.target.checked ? 'BOTH' : 'VN' })}
+                    />
+                    <label htmlFor="langBoth" style={{ margin: 0, fontWeight: 'normal' }}>Hiển thị cho cả 2 ngôn ngữ</label>
+                  </div>
                 </div>
                 <div className="admin-form-group">
                   <label>Thứ tự hiển thị</label>

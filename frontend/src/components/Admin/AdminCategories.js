@@ -101,7 +101,7 @@ function AdminCategories() {
             {categories.map((item) => (
               <tr key={item._id}>
                 <td>{item.name}</td>
-                <td>{item.lang}</td>
+                <td>{item.lang === 'BOTH' ? 'Cả hai' : item.lang}</td>
                 <td>{item.sortOrder}</td>
                 <td>
                   <button className="btn-small" onClick={() => handleOpenModal(item)}>Sửa</button>
@@ -141,7 +141,17 @@ function AdminCategories() {
                 >
                   <option value="VN">Tiếng Việt</option>
                   <option value="EN">Tiếng Anh</option>
+                  <option value="BOTH">Cả hai (Tiếng Việt & Tiếng Anh)</option>
                 </select>
+                <div style={{ marginTop: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <input 
+                    type="checkbox" 
+                    id="langBoth" 
+                    checked={formData.lang === 'BOTH'}
+                    onChange={(e) => setFormData({ ...formData, lang: e.target.checked ? 'BOTH' : 'VN' })}
+                  />
+                  <label htmlFor="langBoth" style={{ margin: 0, fontWeight: 'normal' }}>Hiển thị cho cả 2 ngôn ngữ</label>
+                </div>
               </div>
               <div className="admin-form-group">
                 <label>Thứ tự hiển thị</label>

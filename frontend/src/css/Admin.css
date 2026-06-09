@@ -120,6 +120,11 @@
   border-radius: 4px;
 }
 
+.admin-form-group select option {
+  background-color: #000;
+  color: #fff;
+}
+
 .admin-btn {
   width: 100%;
   padding: 12px;

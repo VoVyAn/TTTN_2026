@@ -30,11 +30,8 @@ function AdminLayout() {
           <NavLink to="/admin/menu" className={({ isActive }) => isActive ? 'active' : ''}>
             Quản lý Thực đơn
           </NavLink>
-          <NavLink to="/admin/categories" className={({ isActive }) => isActive ? 'active' : ''}>
-            Quản lý Danh mục
-          </NavLink>
           <NavLink to="/admin/set-menus" className={({ isActive }) => isActive ? 'active' : ''}>
-            Setmenu
+            Quản lý Menu
           </NavLink>
           <NavLink to="/admin/events" className={({ isActive }) => isActive ? 'active' : ''}>
             Quản lý Sự kiện

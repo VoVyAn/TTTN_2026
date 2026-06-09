@@ -139,7 +139,7 @@ function AdminPress() {
               <tr key={item._id}>
                 <td>{item.title}</td>
                 <td>{item.source}</td>
-                <td>{item.lang}</td>
+                <td>{item.lang === 'BOTH' ? 'Cả hai' : item.lang}</td>
                 <td>
                   <button className="btn-small" onClick={() => handleOpenModal(item)}>Sửa</button>
                   <button className="btn-small btn-delete" onClick={() => handleDelete(item._id)}>Xóa</button>
@@ -197,7 +197,17 @@ function AdminPress() {
                 <select value={formData.lang} onChange={(e) => setFormData({ ...formData, lang: e.target.value })}>
                   <option value="VN">Tiếng Việt</option>
                   <option value="EN">Tiếng Anh</option>
+                  <option value="BOTH">Cả hai (Tiếng Việt & Tiếng Anh)</option>
                 </select>
+                <div style={{ marginTop: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <input 
+                    type="checkbox" 
+                    id="langBoth" 
+                    checked={formData.lang === 'BOTH'}
+                    onChange={(e) => setFormData({ ...formData, lang: e.target.checked ? 'BOTH' : 'VN' })}
+                  />
+                  <label htmlFor="langBoth" style={{ margin: 0, fontWeight: 'normal' }}>Hiển thị cho cả 2 ngôn ngữ</label>
+                </div>
               </div>
               <div className="admin-form-group">
                 <label>Ảnh bài báo (Tải ảnh lên hoặc nhập URL)</label>
