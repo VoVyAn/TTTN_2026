@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useLanguage } from '../LanguageContext';
-import '../css/ReservationForm.css';
+import '../css/pages/ReservationForm.css';
 
 function ReservationForm() {
   const { t } = useLanguage();

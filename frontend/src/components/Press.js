@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLanguage } from '../LanguageContext';
+import '../css/pages/Press.css';
 
 function Press() {
   const { t, lang } = useLanguage();

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLanguage } from '../LanguageContext';
+import '../css/pages/Events.css';
 
 function Events() {
   const { t, lang } = useLanguage();

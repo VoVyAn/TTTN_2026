@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../LanguageContext';
-import '../css/Footer.css';
+import '../css/components/Footer.css';
 
 function Footer() {
   const { t } = useLanguage();
@@ -10,11 +10,12 @@ function Footer() {
       <div className="footer-container">
         <div className="footer-brand">
           <img src="/logo.png" alt="Bờm Logo" className="footer-logo" />
-          <div className="footer-michelin-badges">
+          <a href="https://guide.michelin.com/gb/en/ho-chi-minh/ho-chi-minh_2978179/restaurant/bom-1205510?millesime=um3g85" target="_blank" rel="noopener noreferrer" className="footer-michelin-badges">
             <img src="/michelin-2023.png" alt="Michelin Recommended 2023" className="badge-2023" />
             <img src="/michelin-2024.png" alt="Michelin Recommended 2024" className="badge-2024" />
             <img src="/michelin-2025.png" alt="Michelin Recommended 2025" className="badge-2025" />
-          </div>
+            <img src="/michelin-2026.png" alt="Michelin Recommended 2026" className="badge-2026" />
+          </a>
         </div>
 
         <div className="footer-links">

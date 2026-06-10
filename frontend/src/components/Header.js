@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useLanguage } from '../LanguageContext';
-import '../css/Header.css';
+import '../css/components/Header.css';
 
 function Header() {
   const { lang, changeLang, t } = useLanguage();

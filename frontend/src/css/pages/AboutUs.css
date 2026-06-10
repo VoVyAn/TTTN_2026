@@ -1,0 +1,223 @@
+/* Hero Section in AboutUs */
+.about-us {
+  animation: fadeIn 0.8s ease-out;
+}
+
+.hero-section {
+  position: relative;
+  height: 70vh;
+  min-height: 650px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.4);
+  transform: scale(1.05);
+  transition: transform 10s ease;
+}
+
+.hero-section:hover .hero-image {
+  transform: scale(1);
+}
+
+.hero-overlay {
+  position: relative;
+  text-align: center;
+  z-index: 1;
+}
+
+.hero-overlay h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem;
+  color: var(--primary);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 0.5rem;
+}
+
+.hero-overlay p {
+  font-size: 1.5rem;
+  color: #fff;
+  letter-spacing: 2px;
+  font-weight: 300;
+}
+
+.about-content {
+  max-width: 1200px;
+  margin: 4rem auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+}
+
+.description h2 {
+  font-size: 2.5rem;
+  color: var(--primary);
+}
+
+.description p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-muted);
+}
+
+/* Chef Section in AboutUs */
+.chef-section {
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  min-height: 500px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 110px;
+}
+
+.chef-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.info-section {
+  background: var(--bg-card);
+  padding: 3rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.info-section h3 {
+  color: var(--primary);
+  margin-top: 1.5rem;
+}
+
+.info-section p {
+  color: var(--text-muted);
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+/* Michelin badges on Hero section */
+.hero-michelin-badges {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  animation: fadeIn 1s ease-out;
+}
+
+.hero-michelin-badges img {
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.hero-michelin-badges img.badge-2023 {
+  height: 67px;
+}
+
+.hero-michelin-badges img.badge-2024 {
+  height: 49px;
+}
+
+.hero-michelin-badges img.badge-2025 {
+  height: 51px;
+}
+
+.hero-michelin-badges img.badge-2026 {
+  height: 51px;
+}
+
+.hero-michelin-badges img:hover {
+  transform: scale(1.1);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .about-content {
+    gap: 2rem;
+  }
+  .hero-overlay h1 {
+    font-size: 3rem;
+  }
+  .chef-section {
+    height: auto;
+    min-height: auto;
+    margin-top: 50px;
+    display: block;
+  }
+  .chef-section picture {
+    display: block;
+    width: 100%;
+  }
+  .chef-image {
+    position: relative;
+    height: auto;
+    width: 100%;
+    object-fit: contain;
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 0 1.5rem;
+    margin: 3rem auto;
+  }
+
+  .hero-overlay h1 {
+    font-size: clamp(1rem, 8vw, 2.2rem);
+    white-space: nowrap;
+  }
+
+  .hero-overlay p {
+    font-size: 1rem;
+  }
+
+  .description h2 {
+    font-size: 2rem;
+  }
+
+  .description p {
+    font-size: 1rem;
+  }
+
+  .info-section {
+    padding: 1.5rem;
+  }
+
+  .hero-section {
+    min-height: 350px;
+    height: 45vh;
+  }
+  .chef-section {
+    margin-top: 30px;
+  }
+
+  .hero-michelin-badges {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .hero-michelin-badges img.badge-2023 { height: 47px; }
+  .hero-michelin-badges img.badge-2024 { height: 35px; }
+  .hero-michelin-badges img.badge-2025 { height: 36px; }
+  .hero-michelin-badges img.badge-2026 { height: 36px; }
+}

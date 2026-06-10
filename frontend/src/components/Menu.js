@@ -4,7 +4,7 @@ import { useLanguage } from '../LanguageContext';
 import MenuCarousel from './MenuCarousel';
 import MenuSetCard from './MenuSetCard';
 import MenuLightbox from './MenuLightbox';
-import '../css/Menu.css';
+import '../css/pages/Menu.css';
 
 function MenuDetailsCarousel({ items, onCardClick }) {
   const trackRef = React.useRef(null);

@@ -15,15 +15,18 @@ export function getAuthHeaders() {
 }
 
 export function handleAdminError(error, defaultMessage = 'Có lỗi xảy ra') {
+  const loginPath = window.location.pathname.includes('/booking') ? '/admin/reservations/booking/login' : '/admin/login';
+  
   if (error.message === 'NOT_AUTHENTICATED') {
-    window.location.href = '/admin/login';
+    window.location.href = loginPath;
     return defaultMessage;
   }
   const status = error.response?.status;
   if (status === 401 || status === 403) {
     localStorage.removeItem('adminToken');
     localStorage.removeItem('adminUsername');
-    window.location.href = '/admin/login';
+    localStorage.removeItem('adminRole');
+    window.location.href = loginPath;
     return 'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.';
   }
   return error.response?.data?.error || defaultMessage;

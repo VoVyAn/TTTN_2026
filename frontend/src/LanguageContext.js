@@ -25,6 +25,10 @@ export const LanguageProvider = ({ children }) => {
 
 export const translations = {
   VN: {
+    // Home
+    homeSubtitle: 'Bờm Kitchen & Wine Bar mang đến không gian linh hoạt cho mọi dịp, với Bờm Dining là trung tâm—nơi thực đơn tasting Việt đương đại tinh tế biến mỗi buổi gặp gỡ thành một trải nghiệm đáng nhớ.',
+    homeContact: 'Liên hệ',
+
     // Navbar
     navAbout: 'Về Chúng Tôi',
     navMenu: 'Thực Đơn',
@@ -42,7 +46,7 @@ export const translations = {
     addressTitle: 'Địa chỉ',
 
     // Footer
-    footerMichelin: 'Được Michelin khuyến nghị 2023, 2024, 2025',    
+    footerMichelin: 'Được Michelin khuyến nghị 2023, 2024, 2025, 2026',    
     footerQuickLinks: 'Liên kết nhanh',
     footerContact: 'Liên hệ',
     footerAddress: '24 Nguyễn Thị Nghĩa, Phường Bến Thành, TP. Hồ Chí Minh',
@@ -117,6 +121,10 @@ export const translations = {
     errSubmit: 'Có lỗi xảy ra, vui lòng thử lại'
   },
   EN: {
+    // Home
+    homeSubtitle: 'Bờm Kitchen & Wine Bar offers versatile spaces for every occasion, with Bờm Dining at its heart—where refined contemporary Vietnamese tasting menus turn every gathering into a memorable experience.',
+    homeContact: 'Contact us',
+
     // Navbar
     navAbout: 'About Us',
     navMenu: 'Menu',
@@ -126,7 +134,7 @@ export const translations = {
     
     // AboutUs
     heroTitle: 'Bờm Kitchen Wine & Bar',
-    heroSubtitle: 'Michelin Recommended 2024',
+    heroSubtitle: 'Michelin Recommended 2023, 2024, 2025, 2026',
     aboutTitle: 'About Us',
     aboutDesc1: 'As part of the Bờm Hospitality restaurant group, Bờm Kitchen & Wine Bar draws inspiration from the iconic character in Vietnamese folklore, delivering a message of connection between people and culture through the lens of modern cuisine. Bờm is more than just a restaurant - it is a bridge that brings cultures closer together through the universal language of food. Pioneering Vietnamese fusion cuisine, we take pride in offering vibrant culinary experiences to both locals and international guests. Join Bờm on a journey to explore the harmonious blend of global flavors and immerse yourself in a magnificent culinary adventure!',
     hoursTitle: 'Opening Hours',

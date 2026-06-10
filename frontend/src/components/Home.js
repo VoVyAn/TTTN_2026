@@ -1,10 +1,13 @@
 import React from 'react';
-import '../css/Home.css';
+import { useLanguage } from '../LanguageContext';
+import '../css/pages/Home.css';
 
 function Home() {
+  const { t } = useLanguage();
+
   return (
     <div className="home-container">
-      <video 
+      <video
         className="home-video-fullscreen"
         autoPlay
         loop
@@ -15,19 +18,20 @@ function Home() {
         Trình duyệt không hỗ trợ video.
       </video>
       <div className="home-bottom-bar">
-        <div className="home-michelin-badges">
+        <a href="https://guide.michelin.com/gb/en/ho-chi-minh/ho-chi-minh_2978179/restaurant/bom-1205510?millesime=um3g85" target="_blank" rel="noopener noreferrer" className="home-michelin-badges">
           <img src="/michelin-2023.png" alt="Michelin Recommended 2023" className="badge-2023" />
           <img src="/michelin-2024.png" alt="Michelin Recommended 2024" className="badge-2024" />
           <img src="/michelin-2025.png" alt="Michelin Recommended 2025" className="badge-2025" />
-        </div>
+          <img src="/michelin-2026.png" alt="Michelin Recommended 2026" className="badge-2026" />
+        </a>
         <div className="home-text-center">
           <p className="home-subtitle">
-            Bờm Kitchen &amp; Wine Bar offers versatile spaces for every occasion, with Bờm Dining at its heart—where refined contemporary Vietnamese tasting menus turn every gathering into a memorable experience.
+            {t.homeSubtitle}
           </p>
         </div>
         <div className="home-contact-wrapper">
           <a href="/reservations" className="home-contact-btn">
-            Contact us
+            {t.homeContact}
           </a>
         </div>
       </div>

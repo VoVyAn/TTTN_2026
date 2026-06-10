@@ -1,0 +1,148 @@
+/* Press */
+.press-page {
+  max-width: 1200px;
+  margin: 4rem auto;
+  padding: 0 2rem;
+  text-align: center;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.press-page h2 {
+  font-size: 3.5rem;
+  color: var(--primary);
+  margin-bottom: 3rem;
+  font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif;
+  letter-spacing: -0.5px;
+}
+
+.press-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+}
+
+.press-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: transparent;
+  color: var(--text-main);
+  border-radius: 0;
+  border: none;
+  overflow: hidden;
+  min-height: 420px;
+  box-shadow: none;
+  transition: var(--transition);
+}
+
+.press-card:hover {
+  transform: translateY(-4px);
+}
+
+.press-card--reverse {
+  flex-direction: row-reverse;
+}
+
+.press-card img {
+  width: 50%;
+  height: 420px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: 12px;
+}
+
+.press-card .press-info {
+  width: 50%;
+  padding: 3.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+}
+
+.press-card h3 {
+  font-size: 2.2rem;
+  font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+.press-card .press-desc {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin: 0;
+  white-space: pre-line;
+}
+
+.press-card .press-readmore-btn {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 0.6rem 1.8rem;
+  border: 1px solid var(--text-main);
+  color: var(--text-main);
+  background: transparent;
+  font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: var(--transition);
+  margin-top: 1.5rem;
+}
+
+.press-card .press-readmore-btn:hover {
+  background: var(--primary);
+  color: #000;
+  border-color: var(--primary);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .press-card { min-height: 350px; }
+  .press-card img { height: 350px; }
+  .press-card h3 { font-size: 1.8rem; }
+  .press-card .press-info { padding: 2rem; }
+}
+
+@media (max-width: 768px) {
+  .press-page {
+    padding: 0 1.5rem;
+    margin: 3rem auto;
+  }
+  .press-page h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+  }
+  .press-grid {
+    gap: 2.5rem;
+  }
+  .press-card,
+  .press-card--reverse {
+    flex-direction: column !important;
+    min-height: auto;
+    border-radius: 16px;
+    background: var(--bg-card);
+  }
+  .press-card img {
+    width: 100% !important;
+    height: 250px !important;
+    border-radius: 16px 16px 0 0;
+  }
+  .press-card .press-info {
+    width: 100% !important;
+    padding: 2rem 1.5rem !important;
+  }
+  .press-card h3 {
+    font-size: 1.8rem !important;
+    margin-bottom: 1rem !important;
+  }
+  .press-card .press-desc {
+    font-size: 1rem !important;
+  }
+}

@@ -3,11 +3,24 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const mongoose = require('mongoose');
+const http = require('http');
+const { Server } = require('socket.io');
 
 const connectDB = require('./config/db');
 const seedDatabase = require('./utils/seed');
 
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE']
+  }
+});
+
+// Gắn io vào app để dùng trong controllers
+app.set('io', io);
+
 app.use(cors());
 app.use(express.json());
 
@@ -50,6 +63,6 @@ app.get('/', (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server đang chạy tại http://localhost:${PORT}`);
+server.listen(PORT, () => {
+  console.log(`Server đang chạy tại http://localhost:${PORT} với WebSockets!`);
 });

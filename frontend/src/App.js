@@ -16,6 +16,8 @@ import AdminLayout from './components/Admin/AdminLayout';
 import AdminLogin from './components/Admin/AdminLogin';
 import AdminRegister from './components/Admin/AdminRegister';
 import AdminReservations from './components/Admin/AdminReservations';
+import AdminBooking from './components/Admin/booking/AdminBooking';
+import AdminBookingLogin from './components/Admin/booking/AdminBookingLogin';
 import AdminMenu from './components/Admin/AdminMenu';
 import AdminCategories from './components/Admin/AdminCategories';
 import AdminEvents from './components/Admin/AdminEvents';
@@ -48,6 +50,8 @@ function App() {
             {/* Admin Routes (No default Navbar) */}
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/register" element={<AdminRegister />} />
+            <Route path="/admin/reservations/booking/login" element={<AdminBookingLogin />} />
+            <Route path="/admin/reservations/booking" element={<AdminBooking />} />
             <Route path="/admin" element={<AdminLayout />}>
               <Route path="reservations" element={<AdminReservations />} />
               <Route path="menu" element={<AdminMenu />} />

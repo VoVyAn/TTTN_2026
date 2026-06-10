@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import '../../css/Admin.css';
+import '../../css/pages/Admin.css';
 
 function AdminLayout() {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ function AdminLayout() {
     <div className="admin-layout">
       <div className="admin-sidebar">
         <div className="admin-logo">
-          Bờm Admin
+          Dashboard Admin
         </div>
         <nav className="admin-nav">
           <NavLink to="/admin/reservations" className={({ isActive }) => isActive ? 'active' : ''}>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import '../../css/Admin.css';
+import '../../css/pages/Admin.css';
 
 function AdminLogin() {
   const [username, setUsername] = useState('');
@@ -15,6 +15,7 @@ function AdminLogin() {
       const res = await axios.post('http://localhost:5000/api/auth/login', { username, password });
       localStorage.setItem('adminToken', res.data.token);
       localStorage.setItem('adminUsername', res.data.username);
+      localStorage.setItem('adminRole', res.data.role || 'user');
       navigate('/admin/reservations');
     } catch (err) {
       if (!err.response) {

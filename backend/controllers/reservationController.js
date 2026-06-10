@@ -13,7 +13,7 @@ const getReservations = async (req, res) => {
 
 const createReservation = async (req, res) => {
   try {
-    const { name, phone, email, guests, date, time, note } = req.body;
+    const { name, phone, email, guests, date, time, note, table, nationality, creator, status } = req.body;
     
     // Validation
     if (!name) return res.status(400).json({ error: 'Tên khách hàng là bắt buộc' });
@@ -43,7 +43,11 @@ const createReservation = async (req, res) => {
       guests: Number(guests),
       date,
       time,
-      note: note || ''
+      note: note || '',
+      table: table || '',
+      nationality: nationality || '',
+      creator: creator || '',
+      status: status || 'new'
     });
     
     await reservation.save();
@@ -69,6 +73,12 @@ const createReservation = async (req, res) => {
         note: reservation.note
       }
     });
+
+    // Phát sự kiện WebSockets cho Admin biết có đơn mới
+    const io = req.app.get('io');
+    if (io) {
+      io.emit('new_reservation', reservation);
+    }
   } catch (error) {
     console.error('Lỗi:', error);
     res.status(500).json({ error: 'Lỗi server: ' + error.message });
@@ -80,17 +90,25 @@ const updateReservationStatus = async (req, res) => {
     if (!isValidObjectId(req.params.id)) {
       return res.status(400).json({ error: 'ID không hợp lệ' });
     }
-    const { status } = req.body;
-    const allowed = ['pending', 'confirmed', 'completed', 'cancelled'];
-    if (!allowed.includes(status)) {
-      return res.status(400).json({ error: 'Trạng thái không hợp lệ' });
-    }
+    const updateData = { ...req.body };
+    delete updateData._id;
+    delete updateData.createdAt;
+    delete updateData.updatedAt;
+    delete updateData.__v;
+    
     const updated = await Reservation.findByIdAndUpdate(
       req.params.id,
-      { status },
+      updateData,
       { new: true, runValidators: true }
     );
     if (!updated) return res.status(404).json({ error: 'Không tìm thấy đơn đặt bàn' });
+    
+    // Báo cho clients khác biết có sự cập nhật (có thể dùng chung event new_reservation hoặc tạo event mới)
+    const io = req.app.get('io');
+    if (io) {
+      io.emit('new_reservation', updated);
+    }
+
     res.json(updated);
   } catch (error) {
     res.status(400).json({ error: error.message });

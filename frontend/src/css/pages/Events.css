@@ -1,0 +1,140 @@
+/* Events */
+.events-page {
+  max-width: 1200px;
+  margin: 4rem auto;
+  padding: 0 2rem;
+  text-align: center;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.events-page h2 {
+  font-size: 3.5rem;
+  color: var(--primary);
+  margin-bottom: 3rem;
+  font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif;
+  letter-spacing: -0.5px;
+}
+
+.events-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+}
+
+.event-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: transparent;
+  color: var(--text-main);
+  border-radius: 0;
+  border: none;
+  overflow: hidden;
+  min-height: 420px;
+  box-shadow: none;
+  transition: var(--transition);
+}
+
+.event-card:hover {
+  transform: translateY(-4px);
+  box-shadow: none;
+}
+
+.event-card img {
+  width: 50%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: 12px;
+}
+
+.event-card .event-info {
+  width: 50%;
+  padding: 3.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+}
+
+.event-card h3 {
+  font-size: 2.2rem;
+  font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+.event-card .event-date {
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1.5rem;
+  color: var(--primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.event-card .event-desc {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin: 0;
+  white-space: pre-line;
+}
+
+/* Specific Event Variants */
+.event-card--japan { flex-direction: row-reverse; }
+.event-card--malaysia { flex-direction: row-reverse; }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .event-card { min-height: 350px; }
+  .event-card h3 { font-size: 1.8rem; }
+  .event-card .event-info { padding: 2rem; }
+}
+
+@media (max-width: 768px) {
+  .events-page {
+    padding: 0 1.5rem;
+    margin: 3rem auto;
+  }
+  .events-page h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+  }
+  .events-grid {
+    gap: 2.5rem;
+  }
+  .event-card,
+  .event-card--vietnam,
+  .event-card--japan,
+  .event-card--malaysia,
+  .event-card--american {
+    flex-direction: column !important;
+    min-height: auto;
+    border-radius: 16px;
+    background: var(--bg-card);
+  }
+  .event-card img {
+    width: 100% !important;
+    height: 250px !important;
+    border-radius: 16px 16px 0 0;
+  }
+  .event-card .event-info {
+    width: 100% !important;
+    padding: 2rem 1.5rem !important;
+  }
+  .event-card h3 {
+    font-size: 1.8rem !important;
+    margin-bottom: 1rem !important;
+  }
+  .event-card .event-desc {
+    font-size: 1rem !important;
+  }
+}
