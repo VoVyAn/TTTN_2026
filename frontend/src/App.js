@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Outlet, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet, useLocation, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import AboutUs from './components/AboutUs';
@@ -53,6 +53,7 @@ function App() {
             <Route path="/admin/reservations/booking/login" element={<AdminBookingLogin />} />
             <Route path="/admin/reservations/booking" element={<AdminBooking />} />
             <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<Navigate to="reservations" replace />} />
               <Route path="reservations" element={<AdminReservations />} />
               <Route path="menu" element={<AdminMenu />} />
               <Route path="categories" element={<AdminCategories />} />
@@ -71,6 +72,9 @@ function App() {
               <Route path="/press" element={<Press />} />
               <Route path="/reservations" element={<ReservationForm />} />
             </Route>
+
+            {/* Catch-all 404 route */}
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
       </Router>

@@ -152,6 +152,14 @@
   text-align: center;
 }
 
+.admin-table-wrapper::-webkit-scrollbar {
+  display: none;
+}
+.admin-table-wrapper {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* Tables */
 .admin-table {
   width: 100%;
@@ -164,6 +172,16 @@
   padding: 12px;
   text-align: left;
   border-bottom: 1px solid var(--border-color);
+}
+
+.admin-reservations-table th,
+.admin-reservations-table td {
+  white-space: nowrap;
+}
+
+.admin-table td:last-child,
+.admin-table th:last-child {
+  white-space: nowrap;
 }
 
 .admin-table th {

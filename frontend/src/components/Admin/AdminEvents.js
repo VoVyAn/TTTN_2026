@@ -125,6 +125,7 @@ function AdminEvents() {
         <table className="admin-table">
           <thead>
             <tr>
+              <th>Ảnh</th>
               <th>Tiêu đề</th>
               <th>Ngày</th>
               <th>Ngôn ngữ</th>
@@ -134,6 +135,13 @@ function AdminEvents() {
           <tbody>
             {events.map((item) => (
               <tr key={item._id}>
+                <td>
+                  {item.image ? (
+                    <img src={item.image} alt={item.title} style={{ height: '60px', width: '80px', borderRadius: '4px', objectFit: 'cover' }} />
+                  ) : (
+                    <span style={{ color: '#999', fontSize: '0.85rem' }}>Không có ảnh</span>
+                  )}
+                </td>
                 <td>{item.title}</td>
                 <td>{item.date}</td>
                 <td>{item.lang === 'BOTH' ? 'Cả hai' : item.lang}</td>

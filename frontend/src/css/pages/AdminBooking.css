@@ -60,10 +60,89 @@
   background: #fff;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
   border-radius: 4px;
-  overflow: hidden;
   z-index: 100;
   min-width: 180px;
   border: 1px solid #eef2f6;
+}
+
+/* ========================================================= */
+/* RESPONSIVE DESIGN */
+/* ========================================================= */
+
+@media (max-width: 1024px) {
+  .bk-sidebar {
+    width: 260px;
+  }
+  
+  .bk-modal-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .bk-filters {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .bk-dashboard {
+    height: auto;
+    min-height: 100vh;
+    overflow-y: visible;
+    padding: 10px;
+  }
+
+  .bk-glass-container {
+    height: auto;
+  }
+
+  .bk-main-content {
+    flex-direction: column;
+    overflow: visible;
+  }
+
+  .bk-sidebar {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .bk-data-panel {
+    margin: 10px 0;
+  }
+
+  .bk-nav-tabs {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 15px;
+  }
+
+  .bk-panel-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .bk-search {
+    width: 100%;
+  }
+
+  .bk-search input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .bk-table-wrapper {
+    overflow-x: auto;
+    overflow-y: visible;
+    height: auto;
+    max-height: none;
+  }
+
+  .bk-modal-content {
+    width: 95%;
+    padding: 15px;
+  }
 }
 
 .bk-view-dropdown-item {
@@ -344,6 +423,11 @@
   overflow-y: auto;
   border-top: 1px solid #eef2f6;
   border-bottom: 1px solid #eef2f6;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.bk-table-wrapper::-webkit-scrollbar {
+  display: none;
 }
 
 .bk-table {
@@ -373,6 +457,7 @@
   font-size: 13px;
   color: #525f7f;
   vertical-align: middle;
+  white-space: nowrap;
 }
 
 .bk-col-name { color: #32325d; font-weight: 500; }
@@ -495,6 +580,8 @@
   background: #fff;
   width: 700px;
   max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
   border-radius: 8px;
   padding: 30px;
   box-shadow: 0 15px 35px rgba(0,0,0,0.2);
@@ -669,4 +756,84 @@
 
 .bk-btn-save:hover {
   background: #324cdd;
+}
+
+/* ========================================================= */
+/* RESPONSIVE DESIGN */
+/* ========================================================= */
+
+@media (max-width: 1024px) {
+  .bk-sidebar {
+    width: 260px;
+  }
+  
+  .bk-modal-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .bk-filters {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .bk-dashboard {
+    height: auto;
+    min-height: 100vh;
+    overflow-y: visible;
+    padding: 10px;
+  }
+
+  .bk-glass-container {
+    height: auto;
+  }
+
+  .bk-main-content {
+    flex-direction: column;
+    overflow: visible;
+  }
+
+  .bk-sidebar {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .bk-data-panel {
+    margin: 10px 0;
+  }
+
+  .bk-nav-tabs {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 15px;
+  }
+
+  .bk-panel-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .bk-search {
+    width: 100%;
+  }
+
+  .bk-search input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .bk-table-wrapper {
+    overflow-x: auto;
+    overflow-y: visible;
+    height: auto;
+    max-height: none;
+  }
+
+  .bk-modal-content {
+    width: 95%;
+    padding: 15px;
+  }
 }

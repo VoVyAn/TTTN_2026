@@ -11,6 +11,7 @@ const reservationSchema = new mongoose.Schema({
   status: { type: String, default: 'new' },
   table: { type: String, default: '' },
   nationality: { type: String, default: '' },
+  channel: { type: String, default: 'Website' },
   creator: { type: String, default: '' }
 }, { timestamps: true });
 

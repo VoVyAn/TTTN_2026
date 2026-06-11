@@ -185,9 +185,9 @@ function Menu() {
       setLoading(true);
       try {
         const [menuRes, catRes, setsRes] = await Promise.all([
-          axios.get(`http://localhost:5000/api/menu?lang=${lang}`),
-          axios.get(`http://localhost:5000/api/categories?lang=${lang}`),
-          axios.get(`http://localhost:5000/api/menu-sets?lang=${lang}`)
+          axios.get(`/api/menu?lang=${lang}`),
+          axios.get(`/api/categories?lang=${lang}`),
+          axios.get(`/api/menu-sets?lang=${lang}`)
         ]);
 
         // Group and sort Menu detail items (bottom list)

@@ -12,7 +12,7 @@ function Press() {
     const fetchPress = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:5000/api/press?lang=${lang}`);
+        const response = await axios.get(`/api/press?lang=${lang}`);
         setPressData(response.data);
       } catch (error) {
         console.error("Lỗi tải báo chí:", error);

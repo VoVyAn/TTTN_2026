@@ -12,7 +12,7 @@ function Events() {
     const fetchEvents = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:5000/api/events?lang=${lang}`);
+        const response = await axios.get(`/api/events?lang=${lang}`);
         setEventsData(response.data);
       } catch (error) {
         console.error("Lỗi tải sự kiện:", error);

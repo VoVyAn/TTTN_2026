@@ -92,7 +92,7 @@ function ReservationForm() {
         note: formData.note
       };
 
-      const response = await axios.post('http://localhost:5000/api/reservations', payload);
+      const response = await axios.post('/api/reservations', payload);
       if (response.data.success) {
         setBookingData(response.data.reservation);
         setSubmitted(true);

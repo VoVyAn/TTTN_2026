@@ -1,20 +1,29 @@
 import React from 'react';
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate, Navigate } from 'react-router-dom';
 import '../../css/pages/Admin.css';
+
+const safeGetItem = (key) => {
+  try {
+    return localStorage.getItem(key);
+  } catch (e) {
+    return null;
+  }
+};
 
 function AdminLayout() {
   const navigate = useNavigate();
-  const username = localStorage.getItem('adminUsername');
+  const username = safeGetItem('adminUsername');
 
   const handleLogout = () => {
-    localStorage.removeItem('adminToken');
-    localStorage.removeItem('adminUsername');
+    try {
+      localStorage.removeItem('adminToken');
+      localStorage.removeItem('adminUsername');
+    } catch (e) {}
     navigate('/admin/login');
   };
 
-  if (!localStorage.getItem('adminToken')) {
-    navigate('/admin/login');
-    return null;
+  if (!safeGetItem('adminToken')) {
+    return <Navigate to="/admin/login" replace />;
   }
 
   return (

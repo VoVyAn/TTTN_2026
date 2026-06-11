@@ -12,7 +12,7 @@ function AdminLogin() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', { username, password });
+      const res = await axios.post('/api/auth/login', { username, password });
       localStorage.setItem('adminToken', res.data.token);
       localStorage.setItem('adminUsername', res.data.username);
       localStorage.setItem('adminRole', res.data.role || 'user');
@@ -39,7 +39,15 @@ function AdminLogin() {
             <input type="text" value={username} onChange={e => setUsername(e.target.value)} required />
           </div>
           <div className="admin-form-group">
-            <label>Mật khẩu</label>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <label style={{ margin: 0 }}>Mật khẩu</label>
+              <span 
+                style={{ fontSize: '0.85rem', color: 'var(--primary)', cursor: 'pointer' }}
+                onClick={() => alert('Vui lòng liên hệ Quản trị viên hệ thống để được hỗ trợ cấp lại mật khẩu.')}
+              >
+                Quên mật khẩu?
+              </span>
+            </div>
             <input type="password" value={password} onChange={e => setPassword(e.target.value)} required />
           </div>
           <button type="submit" className="admin-btn">Đăng nhập</button>

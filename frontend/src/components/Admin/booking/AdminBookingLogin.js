@@ -12,11 +12,11 @@ function AdminBookingLogin() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post((process.env.REACT_APP_API_URL || 'http://localhost:5000') + '/api/auth/login', { username, password });
+      const res = await axios.post((process.env.REACT_APP_API_URL || '') + '/api/auth/login', { username, password });
       localStorage.setItem('adminToken', res.data.token);
       localStorage.setItem('adminUsername', res.data.username);
       localStorage.setItem('adminRole', res.data.role || 'user');
-      navigate('/admin/reservations/booking');
+      window.location.href = '/admin/reservations/booking';
     } catch (err) {
       if (!err.response) {
         setError('Không kết nối được Backend. Vui lòng kiểm tra server.');

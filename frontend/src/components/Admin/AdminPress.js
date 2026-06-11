@@ -128,6 +128,7 @@ function AdminPress() {
         <table className="admin-table">
           <thead>
             <tr>
+              <th>Ảnh</th>
               <th>Tiêu đề</th>
               <th>Nguồn</th>
               <th>Ngôn ngữ</th>
@@ -137,6 +138,13 @@ function AdminPress() {
           <tbody>
             {press.map((item) => (
               <tr key={item._id}>
+                <td>
+                  {item.image ? (
+                    <img src={item.image} alt={item.title} style={{ height: '60px', width: '80px', borderRadius: '4px', objectFit: 'cover' }} />
+                  ) : (
+                    <span style={{ color: '#999', fontSize: '0.85rem' }}>Không có ảnh</span>
+                  )}
+                </td>
                 <td>{item.title}</td>
                 <td>{item.source}</td>
                 <td>{item.lang === 'BOTH' ? 'Cả hai' : item.lang}</td>

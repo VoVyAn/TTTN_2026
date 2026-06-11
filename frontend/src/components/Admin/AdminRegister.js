@@ -14,7 +14,7 @@ function AdminRegister() {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/auth/register', { username, password, role });
+      await axios.post('/api/auth/register', { username, password, role });
       setSuccess('Đăng ký thành công! Đang chuyển hướng...');
       setTimeout(() => navigate('/admin/login'), 2000);
     } catch (err) {
