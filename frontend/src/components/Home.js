@@ -1,13 +1,23 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useLanguage } from '../LanguageContext';
 import '../css/pages/Home.css';
 
 function Home() {
   const { t } = useLanguage();
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      // Force muted via DOM node because some WebViews (like Zalo) ignore the React prop
+      videoRef.current.muted = true;
+      videoRef.current.play().catch(err => console.log('Autoplay prevented:', err));
+    }
+  }, []);
 
   return (
     <div className="home-container">
       <video
+        ref={videoRef}
         className="home-video-fullscreen"
         autoPlay
         loop

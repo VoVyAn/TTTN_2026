@@ -7,10 +7,13 @@ function AdminBookingLogin() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError('');
     try {
       const res = await axios.post((process.env.REACT_APP_API_URL || '') + '/api/auth/login', { username, password });
       localStorage.setItem('adminToken', res.data.token);
@@ -23,6 +26,8 @@ function AdminBookingLogin() {
       } else {
         setError(err.response?.data?.error || 'Đăng nhập thất bại');
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -40,11 +45,11 @@ function AdminBookingLogin() {
             <label>Mật khẩu</label>
             <input type="password" value={password} onChange={e => setPassword(e.target.value)} required />
           </div>
-          <button type="submit" style={{ 
-            background: '#5e72e4', color: '#fff', border: 'none', padding: '14px', 
-            borderRadius: '4px', fontSize: '15px', fontWeight: '600', cursor: 'pointer', marginTop: '10px' 
+          <button type="submit" disabled={loading} style={{ 
+            background: loading ? '#8898aa' : '#5e72e4', color: '#fff', border: 'none', padding: '14px', 
+            borderRadius: '4px', fontSize: '15px', fontWeight: '600', cursor: loading ? 'not-allowed' : 'pointer', marginTop: '10px' 
           }}>
-            Truy cập Bảng điều khiển
+            {loading ? 'Đang xử lý...' : 'Truy cập Bảng điều khiển'}
           </button>
         </form>
       </div>

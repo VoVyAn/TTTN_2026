@@ -74,23 +74,21 @@
 .chef-section {
   position: relative;
   width: 100%;
-  height: 70vh;
-  min-height: 500px;
+  height: auto;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   margin-top: 110px;
 }
 
-.chef-image {
-  position: absolute;
-  top: 0;
-  left: 0;
+.chef-section picture {
+  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
+}
+
+.chef-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
 }
 
 .info-section {

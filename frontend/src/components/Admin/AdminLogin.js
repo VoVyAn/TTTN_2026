@@ -7,10 +7,13 @@ function AdminLogin() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError('');
     try {
       const res = await axios.post('/api/auth/login', { username, password });
       localStorage.setItem('adminToken', res.data.token);
@@ -25,6 +28,8 @@ function AdminLogin() {
       } else {
         setError(err.response?.data?.error || 'Đăng nhập thất bại');
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -50,7 +55,9 @@ function AdminLogin() {
             </div>
             <input type="password" value={password} onChange={e => setPassword(e.target.value)} required />
           </div>
-          <button type="submit" className="admin-btn">Đăng nhập</button>
+          <button type="submit" className="admin-btn" disabled={loading}>
+            {loading ? 'Đang xử lý...' : 'Đăng nhập'}
+          </button>
         </form>
         <p style={{ marginTop: '15px', textAlign: 'center' }}>
           Chưa có tài khoản? <Link to="/admin/register" style={{ color: 'var(--primary)' }}>Đăng ký ngay</Link>
