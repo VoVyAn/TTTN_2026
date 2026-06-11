@@ -9,12 +9,38 @@ function AboutUs() {
   const videoRef = useRef(null);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.muted = true;
-      videoRef.current.play().catch(() => {
-        console.log("Autoplay blocked, showing poster.");
-      });
-    }
+    const playVideo = () => {
+      if (videoRef.current) {
+        videoRef.current.muted = true;
+        const playPromise = videoRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            console.log("Autoplay blocked initially, waiting for interaction.");
+          });
+        }
+      }
+    };
+
+    // Cố gắng phát ngay lập tức
+    playVideo();
+
+    // Bắt buộc phát khi người dùng tương tác lần đầu (Vượt rào Zalo)
+    const handleInteraction = () => {
+      playVideo();
+      document.removeEventListener('touchstart', handleInteraction);
+      document.removeEventListener('click', handleInteraction);
+      document.removeEventListener('scroll', handleInteraction);
+    };
+
+    document.addEventListener('touchstart', handleInteraction, { once: true });
+    document.addEventListener('click', handleInteraction, { once: true });
+    document.addEventListener('scroll', handleInteraction, { once: true });
+
+    return () => {
+      document.removeEventListener('touchstart', handleInteraction);
+      document.removeEventListener('click', handleInteraction);
+      document.removeEventListener('scroll', handleInteraction);
+    };
   }, []);
 
   return (
@@ -28,10 +54,11 @@ function AboutUs() {
           muted
           defaultMuted
           playsInline
+          webkit-playsinline="true"
           poster="/home-dining.png"
           style={{ objectFit: 'cover', width: '100%', height: '100%', backgroundColor: '#000' }}
         >
-          <source src="/bom-intro.mp4" type="video/mp4" />
+          <source src={`${window.location.origin}/bom-intro.mp4`} type="video/mp4" />
           Trình duyệt không hỗ trợ video.
         </video>
         <div className="hero-overlay">
