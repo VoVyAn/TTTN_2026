@@ -15,7 +15,7 @@ function AboutUs() {
   muted
   playsInline
 >
-  <source src="/Bom-intro.mp4" type="video/mp4" />
+  <source src="/bom-intro.mp4" type="video/mp4" />
   Trình duyệt không hỗ trợ video.
 </video>
         <div className="hero-overlay">
