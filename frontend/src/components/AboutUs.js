@@ -4,29 +4,27 @@ import '../css/pages/AboutUs.css';
 
 function AboutUs() {
   const { t } = useLanguage();
-  const videoRef = useRef(null);
 
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.muted = true;
-      videoRef.current.play().catch(err => console.log('Autoplay prevented:', err));
-    }
-  }, []);
 
   return (
     <div className="about-us">
       <div className="hero-section">
-        <video 
-          ref={videoRef}
-          className="hero-image"
-          autoPlay
-          loop
-          muted
-          playsInline
-        >
-          <source src="/bom-intro.mp4" type="video/mp4" />
-          Trình duyệt không hỗ trợ video.
-        </video>
+        <div 
+          dangerouslySetInnerHTML={{ 
+            __html: `
+              <video 
+                class="hero-image" 
+                autoplay 
+                loop 
+                muted 
+                playsinline 
+                preload="auto"
+              >
+                <source src="/bom-intro.mp4" type="video/mp4" />
+              </video>
+            `
+          }} 
+        />
         <div className="hero-overlay">
           <h1>{t.heroTitle}</h1>
           <a href="https://guide.michelin.com/gb/en/ho-chi-minh/ho-chi-minh_2978179/restaurant/bom-1205510?millesime=um3g85" target="_blank" rel="noopener noreferrer" className="hero-michelin-badges">

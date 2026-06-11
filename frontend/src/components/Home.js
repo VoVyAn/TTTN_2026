@@ -4,29 +4,26 @@ import '../css/pages/Home.css';
 
 function Home() {
   const { t } = useLanguage();
-  const videoRef = useRef(null);
 
-  useEffect(() => {
-    if (videoRef.current) {
-      // Force muted via DOM node because some WebViews (like Zalo) ignore the React prop
-      videoRef.current.muted = true;
-      videoRef.current.play().catch(err => console.log('Autoplay prevented:', err));
-    }
-  }, []);
 
   return (
     <div className="home-container">
-      <video
-        ref={videoRef}
-        className="home-video-fullscreen"
-        autoPlay
-        loop
-        muted
-        playsInline
-      >
-        <source src="/bom-intro.mp4" type="video/mp4" />
-        Trình duyệt không hỗ trợ video.
-      </video>
+      <div 
+        dangerouslySetInnerHTML={{ 
+          __html: `
+            <video 
+              class="home-video-fullscreen" 
+              autoplay 
+              loop 
+              muted 
+              playsinline 
+              preload="auto"
+            >
+              <source src="/bom-intro.mp4" type="video/mp4" />
+            </video>
+          `
+        }} 
+      />
       <div className="home-bottom-bar">
         <a href="https://guide.michelin.com/gb/en/ho-chi-minh/ho-chi-minh_2978179/restaurant/bom-1205510?millesime=um3g85" target="_blank" rel="noopener noreferrer" className="home-michelin-badges">
           <img src="/michelin-2023.png" alt="Michelin Recommended 2023" className="badge-2023" />
