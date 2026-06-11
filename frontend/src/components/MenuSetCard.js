@@ -22,6 +22,8 @@ function MenuSetCard({ set, expanded = false, onClick, tapHint = 'Nhấn để p
         <img
           src={set.image}
           alt={set.title}
+          loading="lazy"
+          decoding="async"
           style={{
             width: '100%',
             height: '100%',
@@ -37,14 +39,19 @@ function MenuSetCard({ set, expanded = false, onClick, tapHint = 'Nhấn để p
 
   return (
     <CardTag {...cardProps}>
-      <div
+      <img
+        src={set.image}
+        alt=""
         className="menu-set-card-bg"
+        loading="lazy"
+        decoding="async"
         style={{
-          backgroundImage: `url(${set.image})`,
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center',
-          opacity: 0.35
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          objectPosition: 'center',
+          opacity: 0.35,
+          display: 'block'
         }}
         aria-hidden="true"
       />

@@ -11,7 +11,7 @@ function MenuPanelCard({ panel, hoursText, onNavigate }) {
     return (
       <div className={`menu-panel-card menu-panel-card--${panel.theme}`}>
         <div className="menu-panel-info">
-          <img src={panel.image || '/logo.png'} alt="Bờm" className="menu-panel-logo" />
+          <img src={panel.image || '/logo.png'} alt="Bờm" className="menu-panel-logo" loading="lazy" decoding="async" />
           <h3>{panel.title}</h3>
           <p>{panel.subtitle}</p>
           {hoursText && <p className="menu-panel-hours">{hoursText}</p>}
@@ -26,10 +26,18 @@ function MenuPanelCard({ panel, hoursText, onNavigate }) {
       className={`menu-panel-card menu-panel-card--${panel.theme}`}
       onClick={handleClick}
     >
-      <div
-        className="menu-panel-bg"
-        style={{ backgroundImage: panel.image ? `url(${panel.image})` : undefined }}
-      />
+      {panel.image ? (
+        <img
+          src={panel.image}
+          alt=""
+          className="menu-panel-bg"
+          loading="lazy"
+          decoding="async"
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        />
+      ) : (
+        <div className="menu-panel-bg" />
+      )}
       <div className="menu-panel-overlay" />
       <div className="menu-panel-text">
         <h3>{panel.title}</h3>

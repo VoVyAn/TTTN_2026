@@ -133,7 +133,7 @@ function MenuDetailsCarousel({ items, onCardClick }) {
             onClick={() => onCardClick(item)}
           >
             {item.image ? (
-              <img src={item.image} alt={item.name} className="menu-detail-card-img" draggable="false" />
+              <img src={item.image} alt={item.name} className="menu-detail-card-img" draggable="false" loading="lazy" decoding="async" />
             ) : (
               <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#333', color: '#666' }}>
                 No image
