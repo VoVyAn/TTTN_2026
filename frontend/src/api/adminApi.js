@@ -6,6 +6,28 @@ export const api = axios.create({
   baseURL: `${API_BASE}/api`,
 });
 
+api.interceptors.response.use((response) => {
+  const transformUrls = (obj) => {
+    if (obj && typeof obj === 'object') {
+      if (Array.isArray(obj)) {
+        obj.forEach(transformUrls);
+      } else {
+        Object.keys(obj).forEach(key => {
+          if ((key === 'image' || key === 'url') && typeof obj[key] === 'string' && obj[key].startsWith('/uploads')) {
+            obj[key] = API_BASE + obj[key];
+          } else {
+            transformUrls(obj[key]);
+          }
+        });
+      }
+    }
+  };
+  transformUrls(response.data);
+  return response;
+}, (error) => {
+  return Promise.reject(error);
+});
+
 export function getAuthHeaders() {
   const token = localStorage.getItem('adminToken');
   if (!token) {
