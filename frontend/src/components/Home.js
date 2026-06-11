@@ -13,6 +13,8 @@ function Home() {
         loop
         muted
         playsInline
+        controls={false}
+        tabIndex="-1"
       >
         <source src="/bom-intro.mp4" type="video/mp4" />
         Trình duyệt không hỗ trợ video.

@@ -23,6 +23,15 @@
   filter: brightness(0.4);
   transform: scale(1.05);
   transition: transform 10s ease;
+  pointer-events: none;
+}
+
+.hero-image::-webkit-media-controls,
+.hero-image::-webkit-media-controls-enclosure,
+.hero-image::-webkit-media-controls-panel,
+.hero-image::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none;
 }
 
 .hero-section:hover .hero-image {
