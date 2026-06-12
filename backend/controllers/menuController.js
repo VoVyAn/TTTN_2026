@@ -14,6 +14,7 @@ const getPublicMenu = async (req, res) => {
       return acc;
     }, {});
     
+    res.setHeader('Cache-Control', 'public, max-age=300'); // Cache for 5 minutes
     res.json(menuGrouped);
   } catch (error) {
     res.status(500).json({ error: error.message });

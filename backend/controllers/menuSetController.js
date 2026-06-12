@@ -5,6 +5,7 @@ const getPublicMenuSets = async (req, res) => {
   try {
     const lang = req.query.lang || 'EN';
     const sets = await MenuSet.find({ lang: { $in: [lang, 'BOTH'] } }).sort({ sortOrder: 1, title: 1 });
+    res.setHeader('Cache-Control', 'public, max-age=300'); // Cache for 5 minutes
     res.json(sets);
   } catch (error) {
     res.status(500).json({ error: error.message });

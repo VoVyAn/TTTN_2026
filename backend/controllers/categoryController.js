@@ -6,6 +6,7 @@ const getPublicCategories = async (req, res) => {
   try {
     const lang = req.query.lang || 'EN';
     const categories = await MenuCategory.find({ lang: { $in: [lang, 'BOTH'] } }).sort({ sortOrder: 1, name: 1 });
+    res.setHeader('Cache-Control', 'public, max-age=300'); // Cache for 5 minutes
     res.json(categories);
   } catch (error) {
     res.status(500).json({ error: error.message });
