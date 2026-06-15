@@ -40,6 +40,14 @@ function ReservationForm() {
       newErrors.time = t.errTimeEmpty;
     } else if (!/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/.test(formData.time)) {
       newErrors.time = t.errTimeInvalid;
+    } else {
+      const [hours, minutes] = formData.time.split(':').map(Number);
+      const timeInMinutes = hours * 60 + minutes;
+      const startTime = 10 * 60 + 30; // 10:30
+      const endTime = 23 * 60; // 23:00
+      if (timeInMinutes < startTime || timeInMinutes > endTime) {
+        newErrors.time = t.errTimeOutOfHours;
+      }
     }
 
     setErrors(newErrors);

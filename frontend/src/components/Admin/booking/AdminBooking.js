@@ -99,6 +99,17 @@ function AdminBooking() {
   }, [fetchReservations]);
 
   const handleSaveEdit = async () => {
+    if (editingRes.time) {
+      const [hours, minutes] = editingRes.time.split(':').map(Number);
+      const timeInMinutes = hours * 60 + minutes;
+      const startTime = 10 * 60 + 30; // 10:30
+      const endTime = 23 * 60; // 23:00
+      if (timeInMinutes < startTime || timeInMinutes > endTime) {
+        alert('Giờ đặt bàn phải trong khung giờ 10:30 - 23:00 (10:30 AM - 11:00 PM)');
+        return;
+      }
+    }
+
     try {
       if (editingRes.isNew) {
         const dataToSave = { ...editingRes };

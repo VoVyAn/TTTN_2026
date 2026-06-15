@@ -126,6 +126,7 @@ export const translations = {
     errDateEmpty: 'Vui lòng chọn ngày',
     errTimeEmpty: 'Vui lòng chọn giờ',
     errTimeInvalid: 'Giờ không hợp lệ',
+    errTimeOutOfHours: 'Giờ đặt bàn phải trong khung giờ 10:30 - 23:00',
     errSubmit: 'Có lỗi xảy ra, vui lòng thử lại'
   },
   EN: {
@@ -221,6 +222,7 @@ export const translations = {
     errDateEmpty: 'Please select a date',
     errTimeEmpty: 'Please select a time',
     errTimeInvalid: 'Invalid time',
+    errTimeOutOfHours: 'Booking time must be between 10:30 AM and 11:00 PM',
     errSubmit: 'An error occurred, please try again'
   }
 };
