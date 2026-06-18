@@ -144,7 +144,6 @@ function ReservationForm() {
       <div className="success-page-wrapper">
         <div className="success-container">
           <div className="success-card">
-            <div className="success-icon">✅</div>
             <h2>{t.resSuccess}</h2>
             <p>{t.resSuccessDesc}</p>
             
