@@ -47,6 +47,17 @@ function ReservationForm() {
       const endTime = 23 * 60; // 23:00
       if (timeInMinutes < startTime || timeInMinutes > endTime) {
         newErrors.time = t.errTimeOutOfHours;
+      } else if (formData.date) {
+        const selectedDate = new Date(formData.date);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        if (selectedDate.getTime() === today.getTime()) {
+          const now = new Date();
+          const currentTimeInMinutes = now.getHours() * 60 + now.getMinutes();
+          if (timeInMinutes < currentTimeInMinutes) {
+            newErrors.time = t.errTimePast;
+          }
+        }
       }
     }
 

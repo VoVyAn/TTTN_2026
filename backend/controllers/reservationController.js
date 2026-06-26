@@ -36,6 +36,18 @@ const createReservation = async (req, res) => {
       return res.status(400).json({ error: 'Không thể đặt bàn trong quá khứ' });
     }
     
+    // Kiểm tra giờ nếu đặt trong ngày hôm nay
+    if (selectedDate.getTime() === today.getTime()) {
+      const [hours, minutes] = time.split(':').map(Number);
+      const now = new Date();
+      const currentHours = now.getHours();
+      const currentMinutes = now.getMinutes();
+      
+      if (hours < currentHours || (hours === currentHours && minutes < currentMinutes)) {
+        return res.status(400).json({ error: 'Không thể đặt bàn cho thời gian trong quá khứ của ngày hôm nay' });
+      }
+    }
+    
     const reservation = new Reservation({
       customer_name: name,
       phone,

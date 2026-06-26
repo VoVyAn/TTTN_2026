@@ -36,7 +36,7 @@ function AdminBooking() {
   const [currentView, setCurrentView] = useState('active'); // 'active' or 'history'
   const [showViewDropdown, setShowViewDropdown] = useState(false);
   const adminRole = safeGetItem('adminRole') || 'user';
-  
+
   const [customChannels] = useState(() => {
     const saved = safeGetItem('bk_custom_channels');
     return saved ? JSON.parse(saved) : ['Website', 'Facebook', 'Instagram', 'Dinning City'];
@@ -108,14 +108,29 @@ function AdminBooking() {
         alert('Giờ đặt bàn phải trong khung giờ 10:30 - 23:00 (10:30 AM - 11:00 PM)');
         return;
       }
+
+      if (editingRes.isNew && editingRes.date) {
+        const selectedDate = new Date(editingRes.date);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        if (selectedDate.getTime() === today.getTime()) {
+          const now = new Date();
+          const currentTimeInMinutes = now.getHours() * 60 + now.getMinutes();
+          if (timeInMinutes < currentTimeInMinutes) {
+            alert('Không thể đặt bàn cho thời gian trong quá khứ của ngày hôm nay');
+            return;
+          }
+        }
+      }
     }
 
     try {
       if (editingRes.isNew) {
         const dataToSave = { ...editingRes };
         delete dataToSave.isNew;
-        dataToSave.name = dataToSave.customer_name; // Tương thích với Backend (yêu cầu name)
-        
+        dataToSave.name = dataToSave.customer_name; // Tương thích với Backend
+
         await api.post('/reservations', dataToSave, { headers: getAuthHeaders() });
       } else {
         await api.put(`/reservations/${editingRes._id}`, editingRes, { headers: getAuthHeaders() });
@@ -174,7 +189,7 @@ function AdminBooking() {
 
   const sortedReservations = [...filteredReservations].sort((a, b) => {
     if (!sortConfig.key) return 0;
-    
+
     const { key, direction } = sortConfig;
     let aVal = a[key];
     let bVal = b[key];
@@ -238,13 +253,13 @@ function AdminBooking() {
       <div className="bk-glass-container">
         {/* Navigation Tabs */}
         <div className="bk-nav-tabs">
-          <div 
-            className="bk-tab active" 
+          <div
+            className="bk-tab active"
             style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: '8px' }}
             onClick={() => setShowViewDropdown(!showViewDropdown)}
           >
             {currentView === 'active' ? 'Reservations' : 'History Reservation'}
-            
+
             {showViewDropdown && (
               <div className="bk-view-dropdown">
                 <div className="bk-view-dropdown-item" onClick={(e) => { e.stopPropagation(); setCurrentView('active'); setShowViewDropdown(false); }}>
@@ -256,14 +271,14 @@ function AdminBooking() {
               </div>
             )}
           </div>
-          <button 
-            className="bk-inquiry-btn" 
+          <button
+            className="bk-inquiry-btn"
             onClick={() => {
               try {
                 localStorage.removeItem('adminToken');
                 localStorage.removeItem('adminRole');
                 localStorage.removeItem('adminUsername');
-              } catch (e) {}
+              } catch (e) { }
               window.location.href = '/admin/reservations/booking/login';
             }}
             style={{ background: '#f5365c' }}
@@ -273,7 +288,7 @@ function AdminBooking() {
         </div>
 
         <div className="bk-main-content">
-          <AdminBookingSidebar 
+          <AdminBookingSidebar
             currentMonth={currentMonth}
             setCurrentMonth={setCurrentMonth}
             selectedDate={selectedDate}
@@ -311,7 +326,7 @@ function AdminBooking() {
               </div>
             </div>
 
-            <AdminBookingTable 
+            <AdminBookingTable
               sortedReservations={sortedReservations}
               filteredReservations={filteredReservations}
               handleSort={handleSort}
@@ -328,7 +343,7 @@ function AdminBooking() {
         </div>
       </div>
 
-      <AdminBookingModal 
+      <AdminBookingModal
         editingRes={editingRes}
         setEditingRes={setEditingRes}
         handleSaveEdit={handleSaveEdit}
