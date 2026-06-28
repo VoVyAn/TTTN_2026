@@ -28,16 +28,15 @@ const createReservation = async (req, res) => {
     if (!time) return res.status(400).json({ error: 'Giờ đặt bàn là bắt buộc' });
     
     // Kiểm tra ngày không quá khứ
-    const selectedDate = new Date(date);
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const todayString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
     
-    if (selectedDate < today) {
+    if (date < todayString) {
       return res.status(400).json({ error: 'Không thể đặt bàn trong quá khứ' });
     }
     
     // Kiểm tra giờ nếu đặt trong ngày hôm nay
-    if (selectedDate.getTime() === today.getTime()) {
+    if (date === todayString) {
       const [hours, minutes] = time.split(':').map(Number);
       const now = new Date();
       const currentHours = now.getHours();

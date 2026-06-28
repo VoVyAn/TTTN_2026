@@ -26,10 +26,9 @@ function ReservationForm() {
     if (formData.guests < 1) newErrors.guests = t.errGuests;
     
     if (formData.date) {
-      const selectedDate = new Date(formData.date);
       const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      if (selectedDate < today) {
+      const todayString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+      if (formData.date < todayString) {
         newErrors.date = t.errDatePast;
       }
     } else {
@@ -48,10 +47,9 @@ function ReservationForm() {
       if (timeInMinutes < startTime || timeInMinutes > endTime) {
         newErrors.time = t.errTimeOutOfHours;
       } else if (formData.date) {
-        const selectedDate = new Date(formData.date);
         const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        if (selectedDate.getTime() === today.getTime()) {
+        const todayString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+        if (formData.date === todayString) {
           const now = new Date();
           const currentTimeInMinutes = now.getHours() * 60 + now.getMinutes();
           if (timeInMinutes < currentTimeInMinutes) {
