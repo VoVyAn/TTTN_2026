@@ -19,7 +19,7 @@ function AdminBookingLogin() {
       localStorage.setItem('adminToken', res.data.token);
       localStorage.setItem('adminUsername', res.data.username);
       localStorage.setItem('adminRole', res.data.role || 'user');
-      window.location.href = '/restaurant/booking';
+      window.location.href = '/reservations/booking';
     } catch (err) {
       if (!err.response) {
         setError('Không kết nối được Backend. Vui lòng kiểm tra server.');

@@ -50,8 +50,8 @@ function App() {
             {/* Admin Routes (No default Navbar) */}
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/register" element={<AdminRegister />} />
-            <Route path="/restaurant/booking/login" element={<AdminBookingLogin />} />
-            <Route path="/restaurant/booking" element={<AdminBooking />} />
+            <Route path="/reservations/booking/login" element={<AdminBookingLogin />} />
+            <Route path="/reservations/booking" element={<AdminBooking />} />
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<Navigate to="reservations" replace />} />
               <Route path="reservations" element={<AdminReservations />} />

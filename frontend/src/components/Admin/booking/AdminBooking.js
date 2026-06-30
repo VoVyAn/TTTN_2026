@@ -24,7 +24,7 @@ function AdminBooking() {
   useEffect(() => {
     const token = safeGetItem('adminToken');
     if (!token) {
-      navigate('/restaurant/booking/login');
+      navigate('/reservations/booking/login');
     }
   }, [navigate]);
 
@@ -279,7 +279,7 @@ function AdminBooking() {
                 localStorage.removeItem('adminRole');
                 localStorage.removeItem('adminUsername');
               } catch (e) { }
-              window.location.href = '/restaurants/booking/login';
+              window.location.href = '/reservations/booking/login';
             }}
             style={{ background: '#f5365c' }}
           >

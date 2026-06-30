@@ -279,7 +279,7 @@ function AdminReservations() {
       <div className="admin-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h1>Quản lý Đặt bàn</h1>
         <button 
-          onClick={() => navigate('/restaurant/booking')} 
+          onClick={() => navigate('/reservations/booking')} 
           style={{ background: '#cda45e', color: '#1a1814', border: 'none', padding: '10px 20px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
         >
           Booking
