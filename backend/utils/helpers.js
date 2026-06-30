@@ -3,20 +3,18 @@ const mongoose = require('mongoose');
 const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id);
 
 const parseMenuBody = (body) => {
-  const price = Number(body.price);
-  if (Number.isNaN(price) || price < 0) {
-    return { error: 'Giá không hợp lệ' };
-  }
-  if (!body.name?.trim()) return { error: 'Tên món là bắt buộc' };
+  let price = Number(body.price);
+  if (Number.isNaN(price) || price < 0) price = 0;
   if (!['EN', 'VN', 'BOTH'].includes(body.lang)) return { error: 'Ngôn ngữ không hợp lệ' };
   return {
     data: {
-      name: body.name.trim(),
+      name: body.name?.trim() || '',
       price,
       description: body.description?.trim() || '',
       category: body.category?.trim() || 'Menu',
       lang: body.lang,
-      image: body.image?.trim() || ''
+      image: body.image?.trim() || '',
+      isHidden: Boolean(body.isHidden)
     }
   };
 };
@@ -49,7 +47,8 @@ const parseMenuSetBody = (body) => {
       lang: body.lang,
       sortOrder: Number(body.sortOrder) || 0,
       isImageOnly: Boolean(body.isImageOnly),
-      menuType
+      menuType,
+      isHidden: Boolean(body.isHidden)
     }
   };
 };

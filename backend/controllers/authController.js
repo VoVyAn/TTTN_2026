@@ -13,7 +13,7 @@ const register = async (req, res) => {
     if (existing) return res.status(400).json({ error: 'Tên đăng nhập đã tồn tại' });
     
     const hashedPassword = await bcrypt.hash(password, 10);
-    const admin = new Admin({ username, password: hashedPassword, role: role || 'user' });
+    const admin = new Admin({ username, password: hashedPassword, role: 'user' });
     await admin.save();
     
     res.status(201).json({ success: true, message: 'Đăng ký thành công' });

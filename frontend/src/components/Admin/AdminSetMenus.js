@@ -13,7 +13,8 @@ const emptyForm = (defaultType = 'set') => ({
   lang: 'VN',
   sortOrder: 0,
   isImageOnly: false,
-  menuType: defaultType
+  menuType: defaultType,
+  isHidden: false
 });
 
 function AdminSetMenus() {
@@ -82,7 +83,8 @@ function AdminSetMenus() {
         lang: item.lang,
         sortOrder: item.sortOrder ?? 0,
         isImageOnly: item.isImageOnly ?? false,
-        menuType: item.menuType || 'set'
+        menuType: item.menuType || 'set',
+        isHidden: item.isHidden || false
       });
     } else {
       setIsEdit(false);
@@ -138,7 +140,8 @@ function AdminSetMenus() {
       lang: form.lang,
       sortOrder: Number(form.sortOrder) || 0,
       isImageOnly: form.isImageOnly,
-      menuType: form.menuType
+      menuType: form.menuType,
+      isHidden: form.isHidden
     };
     try {
       const headers = getAuthHeaders();
@@ -254,6 +257,7 @@ function AdminSetMenus() {
               <th>Kiểu hiển thị</th>
               <th>Ngôn ngữ</th>
               <th>Thứ tự</th>
+              <th>Trạng thái</th>
               <th>Hành động</th>
             </tr>
           </thead>
@@ -271,6 +275,7 @@ function AdminSetMenus() {
                 <td>{item.isImageOnly ? 'Chỉ hiển thị ảnh' : 'Dàn trang text'}</td>
                 <td>{item.lang === 'BOTH' ? 'Cả hai' : item.lang}</td>
                 <td>{item.sortOrder}</td>
+                <td>{item.isHidden ? <span style={{ color: 'red' }}>Đã ẩn</span> : <span style={{ color: 'green' }}>Hiển thị</span>}</td>
                 <td>
                   <button type="button" className="btn-small" onClick={() => openModal(item)}>Sửa</button>
                   <button type="button" className="btn-small btn-delete" onClick={() => handleDelete(item._id)}>Xóa</button>
@@ -370,6 +375,19 @@ function AdminSetMenus() {
                     <div className="admin-form-group" style={{ flex: 1, marginBottom: 0 }}>
                       <label>Thứ tự</label>
                       <input type="number" min="0" value={form.sortOrder} onChange={(e) => setForm({ ...form, sortOrder: e.target.value })} />
+                    </div>
+                  </div>
+
+                  <div className="admin-form-group" style={{ marginBottom: 0 }}>
+                    <label>Trạng thái</label>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <input
+                        type="checkbox"
+                        id="isHidden"
+                        checked={form.isHidden}
+                        onChange={(e) => setForm({ ...form, isHidden: e.target.checked })}
+                      />
+                      <label htmlFor="isHidden" style={{ margin: 0, fontWeight: 'normal' }}>Ẩn thực đơn này</label>
                     </div>
                   </div>
 

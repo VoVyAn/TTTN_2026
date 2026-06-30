@@ -4,7 +4,9 @@ const { isValidObjectId } = require('../utils/helpers');
 const getPress = async (req, res) => {
   try {
     const lang = req.query.lang || 'EN';
-    const press = await Press.find({ lang: { $in: [lang, 'BOTH'] } });
+    const query = { lang: { $in: [lang, 'BOTH'] } };
+    if (req.query.admin !== 'true') query.isHidden = { $ne: true };
+    const press = await Press.find(query);
     res.json(press);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -39,7 +41,8 @@ const updatePress = async (req, res) => {
         description: description?.trim() || '',
         link: link?.trim() || '',
         image: image?.trim() || '',
-        lang
+        lang,
+        isHidden: Boolean(req.body.isHidden)
       },
       { new: true, runValidators: true }
     );

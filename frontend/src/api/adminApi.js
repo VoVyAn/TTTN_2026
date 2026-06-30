@@ -37,8 +37,8 @@ export function getAuthHeaders() {
 }
 
 export function handleAdminError(error, defaultMessage = 'Có lỗi xảy ra') {
-  const loginPath = window.location.pathname.includes('/booking') ? '/admin/reservations/booking/login' : '/admin/login';
-  
+  const loginPath = window.location.pathname.includes('/booking') ? '/restaurants/booking/login' : '/admin/login';
+
   if (error.message === 'NOT_AUTHENTICATED') {
     window.location.href = loginPath;
     return defaultMessage;

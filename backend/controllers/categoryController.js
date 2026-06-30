@@ -5,7 +5,7 @@ const { isValidObjectId } = require('../utils/helpers');
 const getPublicCategories = async (req, res) => {
   try {
     const lang = req.query.lang || 'EN';
-    const categories = await MenuCategory.find({ lang: { $in: [lang, 'BOTH'] } }).sort({ sortOrder: 1, name: 1 });
+    const categories = await MenuCategory.find({ lang: { $in: [lang, 'BOTH'] }, isHidden: { $ne: true } }).sort({ sortOrder: 1, name: 1 });
     res.setHeader('Cache-Control', 'public, max-age=300'); // Cache for 5 minutes
     res.json(categories);
   } catch (error) {
@@ -31,7 +31,8 @@ const createCategory = async (req, res) => {
     const category = new MenuCategory({
       name: name.trim(),
       lang,
-      sortOrder: Number(sortOrder) || 0
+      sortOrder: Number(sortOrder) || 0,
+      isHidden: Boolean(req.body.isHidden)
     });
     await category.save();
     res.status(201).json(category);
@@ -62,7 +63,7 @@ const updateCategory = async (req, res) => {
 
     const updated = await MenuCategory.findByIdAndUpdate(
       req.params.id,
-      { name: newName, lang, sortOrder: Number(sortOrder) || 0 },
+      { name: newName, lang, sortOrder: Number(sortOrder) || 0, isHidden: Boolean(req.body.isHidden) },
       { new: true, runValidators: true }
     );
 

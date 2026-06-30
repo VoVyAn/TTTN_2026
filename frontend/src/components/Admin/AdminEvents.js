@@ -12,7 +12,8 @@ function AdminEvents() {
     date: '',
     description: '',
     image: '',
-    lang: 'VN'
+    lang: 'VN',
+    isHidden: false
   });
   const [uploading, setUploading] = useState(false);
 
@@ -40,8 +41,8 @@ function AdminEvents() {
 
   const fetchEvents = useCallback(async () => {
     try {
-      const resEN = await api.get('/events?lang=EN');
-      const resVN = await api.get('/events?lang=VN');
+      const resEN = await api.get('/events?lang=EN&admin=true');
+      const resVN = await api.get('/events?lang=VN&admin=true');
       setEvents([...resEN.data, ...resVN.data]);
     } catch (error) {
       alert(handleAdminError(error, 'Lỗi tải sự kiện'));
@@ -63,12 +64,13 @@ function AdminEvents() {
         date: item.date,
         description: item.description || '',
         image: item.image || '',
-        lang: item.lang
+        lang: item.lang,
+        isHidden: item.isHidden || false
       });
     } else {
       setIsEdit(false);
       setCurrentId(null);
-      setFormData({ title: '', date: '', description: '', image: '', lang: 'VN' });
+      setFormData({ title: '', date: '', description: '', image: '', lang: 'VN', isHidden: false });
     }
     setShowModal(true);
   };
@@ -80,7 +82,8 @@ function AdminEvents() {
       date: formData.date.trim(),
       description: formData.description.trim(),
       image: formData.image.trim(),
-      lang: formData.lang
+      lang: formData.lang,
+      isHidden: formData.isHidden
     };
     try {
       const headers = getAuthHeaders();
@@ -129,6 +132,7 @@ function AdminEvents() {
               <th>Tiêu đề</th>
               <th>Ngày</th>
               <th>Ngôn ngữ</th>
+              <th>Trạng thái</th>
               <th>Hành động</th>
             </tr>
           </thead>
@@ -145,6 +149,7 @@ function AdminEvents() {
                 <td>{item.title}</td>
                 <td>{item.date}</td>
                 <td>{item.lang === 'BOTH' ? 'Cả hai' : item.lang}</td>
+                <td>{item.isHidden ? <span style={{ color: 'red' }}>Đã ẩn</span> : <span style={{ color: 'green' }}>Hiển thị</span>}</td>
                 <td>
                   <button className="btn-small" onClick={() => handleOpenModal(item)}>Sửa</button>
                   <button className="btn-small btn-delete" onClick={() => handleDelete(item._id)}>Xóa</button>
@@ -194,6 +199,18 @@ function AdminEvents() {
                     onChange={(e) => setFormData({ ...formData, lang: e.target.checked ? 'BOTH' : 'VN' })}
                   />
                   <label htmlFor="langBoth" style={{ margin: 0, fontWeight: 'normal' }}>Hiển thị cho cả 2 ngôn ngữ</label>
+                </div>
+              </div>
+              <div className="admin-form-group">
+                <label>Trạng thái</label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <input
+                    type="checkbox"
+                    id="isHidden"
+                    checked={formData.isHidden}
+                    onChange={(e) => setFormData({ ...formData, isHidden: e.target.checked })}
+                  />
+                  <label htmlFor="isHidden" style={{ margin: 0, fontWeight: 'normal' }}>Ẩn sự kiện này</label>
                 </div>
               </div>
               <div className="admin-form-group">

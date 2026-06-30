@@ -13,7 +13,8 @@ function AdminPress() {
     description: '',
     link: '',
     image: '',
-    lang: 'VN'
+    lang: 'VN',
+    isHidden: false
   });
   const [uploading, setUploading] = useState(false);
 
@@ -41,8 +42,8 @@ function AdminPress() {
 
   const fetchPress = useCallback(async () => {
     try {
-      const resEN = await api.get('/press?lang=EN');
-      const resVN = await api.get('/press?lang=VN');
+      const resEN = await api.get('/press?lang=EN&admin=true');
+      const resVN = await api.get('/press?lang=VN&admin=true');
       setPress([...resEN.data, ...resVN.data]);
     } catch (error) {
       alert(handleAdminError(error, 'Lỗi tải truyền thông'));
@@ -65,12 +66,13 @@ function AdminPress() {
         description: item.description || '',
         link: item.link || '',
         image: item.image || '',
-        lang: item.lang
+        lang: item.lang,
+        isHidden: item.isHidden || false
       });
     } else {
       setIsEdit(false);
       setCurrentId(null);
-      setFormData({ title: '', source: '', description: '', link: '', image: '', lang: 'VN' });
+      setFormData({ title: '', source: '', description: '', link: '', image: '', lang: 'VN', isHidden: false });
     }
     setShowModal(true);
   };
@@ -83,7 +85,8 @@ function AdminPress() {
       description: formData.description.trim(),
       link: formData.link.trim(),
       image: formData.image.trim(),
-      lang: formData.lang
+      lang: formData.lang,
+      isHidden: formData.isHidden
     };
     try {
       const headers = getAuthHeaders();
@@ -132,6 +135,7 @@ function AdminPress() {
               <th>Tiêu đề</th>
               <th>Nguồn</th>
               <th>Ngôn ngữ</th>
+              <th>Trạng thái</th>
               <th>Hành động</th>
             </tr>
           </thead>
@@ -148,6 +152,7 @@ function AdminPress() {
                 <td>{item.title}</td>
                 <td>{item.source}</td>
                 <td>{item.lang === 'BOTH' ? 'Cả hai' : item.lang}</td>
+                <td>{item.isHidden ? <span style={{ color: 'red' }}>Đã ẩn</span> : <span style={{ color: 'green' }}>Hiển thị</span>}</td>
                 <td>
                   <button className="btn-small" onClick={() => handleOpenModal(item)}>Sửa</button>
                   <button className="btn-small btn-delete" onClick={() => handleDelete(item._id)}>Xóa</button>
@@ -215,6 +220,18 @@ function AdminPress() {
                     onChange={(e) => setFormData({ ...formData, lang: e.target.checked ? 'BOTH' : 'VN' })}
                   />
                   <label htmlFor="langBoth" style={{ margin: 0, fontWeight: 'normal' }}>Hiển thị cho cả 2 ngôn ngữ</label>
+                </div>
+              </div>
+              <div className="admin-form-group">
+                <label>Trạng thái</label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <input
+                    type="checkbox"
+                    id="isHidden"
+                    checked={formData.isHidden}
+                    onChange={(e) => setFormData({ ...formData, isHidden: e.target.checked })}
+                  />
+                  <label htmlFor="isHidden" style={{ margin: 0, fontWeight: 'normal' }}>Ẩn bài báo này</label>
                 </div>
               </div>
               <div className="admin-form-group">

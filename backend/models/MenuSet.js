@@ -20,7 +20,8 @@ const menuSetSchema = new mongoose.Schema({
   lang: { type: String, required: true, enum: ['EN', 'VN', 'BOTH'] },
   sortOrder: { type: Number, default: 0 },
   isImageOnly: { type: Boolean, default: false },
-  menuType: { type: String, enum: ['set', 'alacarte', 'wine', 'khung'], default: 'set' }
+  menuType: { type: String, enum: ['set', 'alacarte', 'wine', 'khung'], default: 'set' },
+  isHidden: { type: Boolean, default: false }
 }, { timestamps: true });
 
 module.exports = mongoose.model('MenuSet', menuSetSchema);

@@ -5,7 +5,7 @@ const { parseMenuBody, isValidObjectId } = require('../utils/helpers');
 const getPublicMenu = async (req, res) => {
   try {
     const lang = req.query.lang || 'EN';
-    const items = await MenuItem.find({ lang: { $in: [lang, 'BOTH'] } });
+    const items = await MenuItem.find({ lang: { $in: [lang, 'BOTH'] }, isHidden: { $ne: true } });
     
     const menuGrouped = items.reduce((acc, item) => {
       const catName = 'Menu'; // Force single category

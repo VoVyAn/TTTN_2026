@@ -4,7 +4,9 @@ const { isValidObjectId } = require('../utils/helpers');
 const getEvents = async (req, res) => {
   try {
     const lang = req.query.lang || 'EN';
-    const events = await Event.find({ lang: { $in: [lang, 'BOTH'] } });
+    const query = { lang: { $in: [lang, 'BOTH'] } };
+    if (req.query.admin !== 'true') query.isHidden = { $ne: true };
+    const events = await Event.find(query);
     res.json(events);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -40,7 +42,8 @@ const updateEvent = async (req, res) => {
         date: date.trim(),
         description: description?.trim() || '',
         image: image?.trim() || '',
-        lang
+        lang,
+        isHidden: Boolean(req.body.isHidden)
       },
       { new: true, runValidators: true }
     );

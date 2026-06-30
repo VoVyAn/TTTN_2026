@@ -6,7 +6,8 @@ const pressSchema = new mongoose.Schema({
   description: { type: String },
   link: { type: String },
   image: { type: String },
-  lang: { type: String, required: true }
+  lang: { type: String, required: true },
+  isHidden: { type: Boolean, default: false }
 });
 
 module.exports = mongoose.model('Press', pressSchema);

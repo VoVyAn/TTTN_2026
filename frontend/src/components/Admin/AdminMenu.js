@@ -15,7 +15,8 @@ function AdminMenu() {
     description: '',
     category: '',
     lang: 'VN',
-    image: ''
+    image: '',
+    isHidden: false
   });
 
   const fetchMenu = useCallback(async () => {
@@ -72,7 +73,8 @@ function AdminMenu() {
         description: item.description || '',
         category: item.category,
         lang: item.lang,
-        image: item.image || ''
+        image: item.image || '',
+        isHidden: item.isHidden || false
       });
     } else {
       setIsEdit(false);
@@ -85,7 +87,8 @@ function AdminMenu() {
         description: '',
         category: firstCategory?.name || '',
         lang: defaultLang,
-        image: ''
+        image: '',
+        isHidden: false
       });
     }
     setShowModal(true);
@@ -107,7 +110,8 @@ function AdminMenu() {
       price: Number(formData.price),
       description: formData.description.trim(),
       lang: formData.lang,
-      image: formData.image
+      image: formData.image,
+      isHidden: formData.isHidden
     };
     try {
       const headers = getAuthHeaders();
@@ -156,6 +160,7 @@ function AdminMenu() {
               <th>Tên món</th>
               <th>Giá</th>
               <th>Ngôn ngữ</th>
+              <th>Trạng thái</th>
               <th>Hành động</th>
             </tr>
           </thead>
@@ -169,9 +174,10 @@ function AdminMenu() {
                     <span style={{ color: '#999', fontSize: '0.85rem' }}>Không có ảnh</span>
                   )}
                 </td>
-                <td>{item.name}</td>
+                <td>{item.name || <span style={{ color: '#888', fontStyle: 'italic' }}>*(Chỉ có ảnh)*</span>}</td>
                 <td>{Number(item.price).toLocaleString()}đ</td>
                 <td>{item.lang === 'BOTH' ? 'Cả hai' : item.lang}</td>
+                <td>{item.isHidden ? <span style={{ color: 'red' }}>Đã ẩn</span> : <span style={{ color: 'green' }}>Hiển thị</span>}</td>
                 <td>
                   <button className="btn-small" onClick={() => handleOpenModal(item)}>Sửa</button>
                   <button className="btn-small btn-delete" onClick={() => handleDelete(item._id)}>Xóa</button>
@@ -230,12 +236,12 @@ function AdminMenu() {
                 {/* Cột phải: Thông tin */}
                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '15px' }}>
                   <div className="admin-form-group" style={{ marginBottom: 0 }}>
-                    <label>Tên món</label>
-                    <input type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required />
+                    <label>Tên món (Tùy chọn nếu chỉ dùng ảnh)</label>
+                    <input type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
                   </div>
                   <div className="admin-form-group" style={{ marginBottom: 0 }}>
-                    <label>Giá (VNĐ)</label>
-                    <input type="number" min="0" value={formData.price} onChange={(e) => setFormData({ ...formData, price: e.target.value })} required />
+                    <label>Giá (VNĐ) (Tùy chọn)</label>
+                    <input type="number" min="0" value={formData.price} onChange={(e) => setFormData({ ...formData, price: e.target.value })} />
                   </div>
                   <div className="admin-form-group" style={{ marginBottom: 0 }}>
                     <label>Ngôn ngữ</label>
@@ -258,6 +264,18 @@ function AdminMenu() {
                   <div className="admin-form-group" style={{ marginBottom: 0 }}>
                     <label>Mô tả (không bắt buộc)</label>
                     <textarea rows="4" value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} />
+                  </div>
+                  <div className="admin-form-group" style={{ marginBottom: 0 }}>
+                    <label>Trạng thái</label>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <input
+                        type="checkbox"
+                        id="isHidden"
+                        checked={formData.isHidden}
+                        onChange={(e) => setFormData({ ...formData, isHidden: e.target.checked })}
+                      />
+                      <label htmlFor="isHidden" style={{ margin: 0, fontWeight: 'normal' }}>Ẩn món này</label>
+                    </div>
                   </div>
                 </div>
               </div>
