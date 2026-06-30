@@ -197,6 +197,7 @@ function AdminMenuPanels() {
                   <label>Thứ tự</label>
                   <input type="number" min="0" value={form.sortOrder} onChange={(e) => setForm({ ...form, sortOrder: e.target.value })} />
                 </div>
+                
               </div>
               <div className="admin-modal-actions">
                 <button type="button" className="admin-btn btn-cancel" onClick={() => setShowModal(false)}>Hủy</button>
