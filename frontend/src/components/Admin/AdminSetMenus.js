@@ -7,12 +7,9 @@ const emptyForm = (defaultType = 'set') => ({
   title: '',
   theme: 'green',
   image: '',
-  pricingText: '',
-  courses: [emptyCourse()],
-  footer: '',
   lang: 'VN',
   sortOrder: 0,
-  isImageOnly: false,
+  isImageOnly: true,
   menuType: defaultType,
   isHidden: false
 });
@@ -72,17 +69,9 @@ function AdminSetMenus() {
         title: item.title,
         theme: item.theme,
         image: item.image || '',
-        pricingText: (item.pricing || []).join('\n'),
-        courses: item.courses?.length
-          ? item.courses.map((c) => ({
-            label: c.label,
-            items: c.items?.length ? c.items.map((i) => ({ name: i.name, desc: i.desc || '' })) : [{ name: '', desc: '' }]
-          }))
-          : [emptyCourse()],
-        footer: item.footer || '',
         lang: item.lang,
         sortOrder: item.sortOrder ?? 0,
-        isImageOnly: item.isImageOnly ?? false,
+        isImageOnly: true,
         menuType: item.menuType || 'set',
         isHidden: item.isHidden || false
       });
@@ -94,52 +83,18 @@ function AdminSetMenus() {
     setShowModal(true);
   };
 
-  const updateCourse = (ci, field, value) => {
-    const courses = [...form.courses];
-    courses[ci] = { ...courses[ci], [field]: value };
-    setForm({ ...form, courses });
-  };
-
-  const updateDish = (ci, di, field, value) => {
-    const courses = [...form.courses];
-    const itemsList = [...courses[ci].items];
-    itemsList[di] = { ...itemsList[di], [field]: value };
-    courses[ci] = { ...courses[ci], items: itemsList };
-    setForm({ ...form, courses });
-  };
-
-  const addCourse = () => setForm({ ...form, courses: [...form.courses, emptyCourse()] });
-
-  const removeCourse = (ci) => {
-    if (form.courses.length <= 1) return;
-    setForm({ ...form, courses: form.courses.filter((_, i) => i !== ci) });
-  };
-
-  const addDish = (ci) => {
-    const courses = [...form.courses];
-    courses[ci] = { ...courses[ci], items: [...courses[ci].items, { name: '', desc: '' }] };
-    setForm({ ...form, courses });
-  };
-
-  const removeDish = (ci, di) => {
-    const courses = [...form.courses];
-    if (courses[ci].items.length <= 1) return;
-    courses[ci] = { ...courses[ci], items: courses[ci].items.filter((_, i) => i !== di) };
-    setForm({ ...form, courses });
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const payload = {
       title: form.title,
       theme: form.theme,
       image: form.image,
-      pricing: form.isImageOnly ? [] : form.pricingText.split('\n').map((p) => p.trim()).filter(Boolean),
-      courses: form.isImageOnly ? [] : form.courses,
-      footer: form.isImageOnly ? '' : form.footer,
+      pricing: [],
+      courses: [],
+      footer: '',
       lang: form.lang,
       sortOrder: Number(form.sortOrder) || 0,
-      isImageOnly: form.isImageOnly,
+      isImageOnly: true,
       menuType: form.menuType,
       isHidden: form.isHidden
     };
@@ -295,32 +250,56 @@ function AdminSetMenus() {
 
       {showModal && (
         <div className="admin-modal-overlay">
-          <div className="admin-modal admin-modal--wide" style={{ maxWidth: '1100px' }}>
+          <div className="admin-modal admin-modal--wide">
             <h2>{isEdit ? 'Sửa thực đơn' : 'Thêm thực đơn'}</h2>
             <form onSubmit={handleSubmit}>
-              <div style={{ display: 'flex', gap: '30px', alignItems: 'flex-start' }}>
-                
-                {/* CỘT TRÁI: ẢNH VÀ TÙY CHỌN HIỂN THỊ */}
-                <div style={{ flex: '0 0 320px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                  <div className="admin-form-group" style={{ marginBottom: 0 }}>
-                    <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontWeight: 'bold' }}>
-                      <input
-                        type="checkbox"
-                        checked={form.isImageOnly}
-                        onChange={(e) => setForm({ ...form, isImageOnly: e.target.checked })}
-                        style={{ width: '20px', height: '20px', cursor: 'pointer', margin: 0 }}
-                      />
-                      Chỉ hiển thị ảnh thiết kế sẵn
-                    </label>
+              <div className="admin-form-group">
+                <label>Tiêu đề</label>
+                <input type="text" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} required />
+              </div>
+
+              <div className="admin-form-row">
+                <div className="admin-form-group">
+                  <label>Phân loại</label>
+                  <select value={form.menuType} onChange={(e) => setForm({ ...form, menuType: e.target.value })}>
+                    <option value="set">SET MENU</option>
+                    <option value="alacarte">ALACARTE MENU</option>
+                    <option value="wine">WINE</option>
+                    <option value="khung">DRINK MENU</option>
+                  </select>
+                </div>
+                <div className="admin-form-group">
+                  <label>Ngôn ngữ</label>
+                  <select value={form.lang} onChange={(e) => setForm({ ...form, lang: e.target.value })}>
+                    <option value="VN">Tiếng Việt</option>
+                    <option value="EN">English</option>
+                    <option value="BOTH">Cả hai</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="admin-form-row">
+                <div className="admin-form-group">
+                  <label>Thứ tự</label>
+                  <input type="number" min="0" value={form.sortOrder} onChange={(e) => setForm({ ...form, sortOrder: e.target.value })} style={{ width: '100px' }} />
+                </div>
+                <div className="admin-form-group">
+                  <label>Trạng thái</label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '10px' }}>
+                    <input
+                      type="checkbox"
+                      id="isHidden"
+                      checked={form.isHidden}
+                      onChange={(e) => setForm({ ...form, isHidden: e.target.checked })}
+                    />
+                    <label htmlFor="isHidden" style={{ margin: 0, fontWeight: 'normal' }}>Ẩn thực đơn này</label>
                   </div>
-                  
-                  <div style={{ width: '100%', height: '400px', border: '2px dashed var(--border-color)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: 'rgba(255,255,255,0.02)' }}>
-                    {form.image ? (
-                      <img src={form.image} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                    ) : (
-                      <span style={{ color: '#888', fontSize: '0.9rem', textAlign: 'center', padding: '10px' }}>Chưa có ảnh</span>
-                    )}
-                  </div>
+                </div>
+              </div>
+
+              <div className="admin-form-group">
+                <label>Ảnh thực đơn (Tải ảnh lên hoặc nhập URL)</label>
+                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                   <input
                     type="file"
                     accept="image/*"
@@ -331,125 +310,40 @@ function AdminSetMenus() {
                   <button
                     type="button"
                     className="admin-btn"
-                    style={{ width: '100%', padding: '10px', fontSize: '0.95rem' }}
+                    style={{ width: 'auto', margin: 0, padding: '8px 16px', display: 'inline-flex', alignItems: 'center', gap: '5px' }}
                     onClick={() => document.getElementById('menu-image-upload').click()}
                     disabled={uploading}
                   >
-                    {uploading ? 'Đang tải lên...' : 'Tải ảnh lên'}
+                    {uploading ? 'Đang tải lên...' : 'Chọn file ảnh'}
                   </button>
                   <input
                     type="text"
                     value={form.image}
                     onChange={(e) => setForm({ ...form, image: e.target.value })}
-                    placeholder="Hoặc nhập URL ảnh..."
-                    style={{ width: '100%', padding: '10px', fontSize: '0.9rem', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--border-color)', color: '#fff', borderRadius: '4px' }}
-                    required={form.isImageOnly}
+                    placeholder="Hoặc nhập URL ảnh: https://..."
+                    style={{ flex: 1 }}
+                    required
                   />
                 </div>
-
-                {/* CỘT PHẢI: THÔNG TIN VÀ CÁC MÓN */}
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                  <div className="admin-form-group" style={{ marginBottom: 0 }}>
-                    <label>Tiêu đề</label>
-                    <input type="text" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} required />
+                {form.image && (
+                  <div style={{ marginTop: '10px' }}>
+                    <img src={form.image} alt="Preview" style={{ maxHeight: '120px', borderRadius: '4px', border: '1px solid #ccc' }} />
+                    <button
+                      type="button"
+                      onClick={() => setForm({ ...form, image: '' })}
+                      style={{ marginLeft: '10px', padding: '4px 8px', background: 'red', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', verticalAlign: 'top' }}
+                    >
+                      Xóa ảnh
+                    </button>
                   </div>
-                  
-                  <div className="admin-form-row" style={{ gap: '15px', marginBottom: 0 }}>
-                    <div className="admin-form-group" style={{ flex: 1, marginBottom: 0 }}>
-                      <label>Phân loại</label>
-                      <select value={form.menuType} onChange={(e) => setForm({ ...form, menuType: e.target.value })}>
-                        <option value="set">SET MENU</option>
-                        <option value="alacarte">ALACARTE MENU</option>
-                        <option value="wine">WINE</option>
-                        <option value="khung">DRINK MENU</option>
-                      </select>
-                    </div>
-                    <div className="admin-form-group" style={{ flex: 1, marginBottom: 0 }}>
-                      <label>Ngôn ngữ</label>
-                      <select value={form.lang} onChange={(e) => setForm({ ...form, lang: e.target.value })}>
-                        <option value="VN">Tiếng Việt</option>
-                        <option value="EN">English</option>
-                        <option value="BOTH">Cả hai</option>
-                      </select>
-                    </div>
-                    <div className="admin-form-group" style={{ flex: 1, marginBottom: 0 }}>
-                      <label>Thứ tự</label>
-                      <input type="number" min="0" value={form.sortOrder} onChange={(e) => setForm({ ...form, sortOrder: e.target.value })} />
-                    </div>
-                  </div>
-
-                  <div className="admin-form-group" style={{ marginBottom: 0 }}>
-                    <label>Trạng thái</label>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <input
-                        type="checkbox"
-                        id="isHidden"
-                        checked={form.isHidden}
-                        onChange={(e) => setForm({ ...form, isHidden: e.target.checked })}
-                      />
-                      <label htmlFor="isHidden" style={{ margin: 0, fontWeight: 'normal' }}>Ẩn thực đơn này</label>
-                    </div>
-                  </div>
-
-                  {!form.isImageOnly && (
-                    <>
-                      <div className="admin-form-group" style={{ marginBottom: 0 }}>
-                        <label>Giá (mỗi dòng một mức giá)</label>
-                        <textarea rows="2" value={form.pricingText} onChange={(e) => setForm({ ...form, pricingText: e.target.value })} />
-                      </div>
-
-                      <div className="admin-form-group" style={{ marginBottom: 0 }}>
-                        <label>Các món trong set / thực đơn</label>
-                        <div style={{ maxHeight: '350px', overflowY: 'auto', paddingRight: '10px' }}>
-                          {form.courses.map((course, ci) => (
-                            <div key={ci} className="admin-course-block">
-                              <div className="admin-course-header">
-                                <input
-                                  type="text"
-                                  placeholder="Nhãn (VD: KHAI VỊ / MÓN CHÍNH / ĐỒ UỐNG)"
-                                  value={course.label}
-                                  onChange={(e) => updateCourse(ci, 'label', e.target.value)}
-                                  required
-                                />
-                                <button type="button" className="btn-small btn-delete" onClick={() => removeCourse(ci)}>Xóa nhóm</button>
-                              </div>
-                              {course.items.map((dish, di) => (
-                                <div key={di} className="admin-dish-row">
-                                  <input
-                                    type="text"
-                                    placeholder="Tên món / Tên đồ uống"
-                                    value={dish.name}
-                                    onChange={(e) => updateDish(ci, di, 'name', e.target.value)}
-                                    required
-                                  />
-                                  <input
-                                    type="text"
-                                    placeholder="Mô tả thành phần / Chi tiết"
-                                    value={dish.desc}
-                                    onChange={(e) => updateDish(ci, di, 'desc', e.target.value)}
-                                  />
-                                  <button type="button" className="btn-small btn-delete" onClick={() => removeDish(ci, di)}>×</button>
-                                </div>
-                              ))}
-                              <button type="button" className="btn-small" onClick={() => addDish(ci)}>+ Món</button>
-                            </div>
-                          ))}
-                          <button type="button" className="btn-small" style={{ marginTop: '8px' }} onClick={addCourse}>+ Nhóm món</button>
-                        </div>
-                      </div>
-
-                      <div className="admin-form-group" style={{ marginBottom: 0 }}>
-                        <label>Ghi chú cuối thẻ</label>
-                        <textarea rows="2" value={form.footer} onChange={(e) => setForm({ ...form, footer: e.target.value })} />
-                      </div>
-                    </>
-                  )}
-                </div>
+                )}
               </div>
 
-              <div className="admin-modal-actions" style={{ marginTop: '25px', borderTop: '1px solid var(--border-color)', paddingTop: '20px' }}>
-                <button type="button" className="admin-btn btn-cancel" onClick={() => setShowModal(false)} style={{ width: '100px' }}>Hủy</button>
-                <button type="submit" className="admin-btn" style={{ width: '120px' }}>Lưu lại</button>
+              <div className="admin-modal-actions">
+                <button type="button" className="admin-btn btn-cancel" onClick={() => setShowModal(false)}>Hủy</button>
+                <button type="submit" className="admin-btn" style={{ width: 'auto' }}>
+                  {isEdit ? 'Cập nhật' : 'Thêm mới'}
+                </button>
               </div>
             </form>
           </div>

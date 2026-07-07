@@ -37,7 +37,7 @@ function AdminLayout() {
             Quản lý Đặt bàn
           </NavLink>
           <NavLink to="/admin/menu" className={({ isActive }) => isActive ? 'active' : ''}>
-            Quản lý Thực đơn
+            Quản lý Chi tiết thực đơn
           </NavLink>
           <NavLink to="/admin/set-menus" className={({ isActive }) => isActive ? 'active' : ''}>
             Quản lý Menu

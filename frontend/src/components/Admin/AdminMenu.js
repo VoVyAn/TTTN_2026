@@ -142,7 +142,7 @@ function AdminMenu() {
   return (
     <div>
       <div className="admin-header">
-        <h1>Quản lý Thực đơn</h1>
+        <h1>Quản lý Chi tiết thực đơn</h1>
         <button
           className="admin-btn"
           style={{ width: 'auto', padding: '10px 20px' }}
@@ -186,7 +186,7 @@ function AdminMenu() {
             ))}
             {menuItems.length === 0 && (
               <tr>
-                <td colSpan="5" style={{ textAlign: 'center' }}>Chưa có món nào</td>
+                <td colSpan="6" style={{ textAlign: 'center' }}>Chưa có món nào</td>
               </tr>
             )}
           </tbody>
@@ -195,19 +195,76 @@ function AdminMenu() {
 
       {showModal && (
         <div className="admin-modal-overlay">
-          <div className="admin-modal" style={{ maxWidth: '700px' }}>
+          <div className="admin-modal">
             <h2>{isEdit ? 'Sửa món ăn' : 'Thêm món mới'}</h2>
             <form onSubmit={handleSubmit}>
-              <div style={{ display: 'flex', gap: '25px', alignItems: 'flex-start' }}>
-                {/* Cột trái: Ảnh */}
-                <div style={{ flex: '0 0 200px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                  <div style={{ width: '100%', height: '200px', border: '2px dashed var(--border-color)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', background: 'rgba(255,255,255,0.02)' }}>
-                    {formData.image ? (
-                      <img src={formData.image} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                    ) : (
-                      <span style={{ color: '#888', fontSize: '0.9rem', textAlign: 'center', padding: '10px' }}>Chưa có ảnh</span>
-                    )}
+              <div className="admin-form-group">
+                <label>Tên món (Tùy chọn nếu chỉ dùng ảnh)</label>
+                <input
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                />
+              </div>
+
+              <div className="admin-form-row">
+                <div className="admin-form-group">
+                  <label>Giá (VNĐ) (Tùy chọn)</label>
+                  <input
+                    type="number"
+                    min="0"
+                    value={formData.price}
+                    onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                  />
+                </div>
+                <div className="admin-form-group">
+                  <label>Ngôn ngữ</label>
+                  <select value={formData.lang} onChange={(e) => handleLangChange(e.target.value)}>
+                    <option value="VN">Tiếng Việt</option>
+                    <option value="EN">Tiếng Anh</option>
+                    <option value="BOTH">Cả hai</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="admin-form-group">
+                <label>Mô tả (không bắt buộc)</label>
+                <textarea
+                  rows="3"
+                  value={formData.description}
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  placeholder="Nhập đoạn mô tả ngắn về món ăn..."
+                />
+              </div>
+
+              <div className="admin-form-row">
+                <div className="admin-form-group">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <input
+                      type="checkbox"
+                      id="langBoth"
+                      checked={formData.lang === 'BOTH'}
+                      onChange={(e) => handleLangChange(e.target.checked ? 'BOTH' : 'VN')}
+                    />
+                    <label htmlFor="langBoth" style={{ margin: 0, fontWeight: 'normal' }}>Hiển thị cho cả 2 ngôn ngữ</label>
                   </div>
+                </div>
+                <div className="admin-form-group">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <input
+                      type="checkbox"
+                      id="isHidden"
+                      checked={formData.isHidden}
+                      onChange={(e) => setFormData({ ...formData, isHidden: e.target.checked })}
+                    />
+                    <label htmlFor="isHidden" style={{ margin: 0, fontWeight: 'normal' }}>Ẩn món này</label>
+                  </div>
+                </div>
+              </div>
+
+              <div className="admin-form-group">
+                <label>Ảnh món ăn (Tải ảnh lên hoặc nhập URL)</label>
+                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                   <input
                     type="file"
                     accept="image/*"
@@ -218,90 +275,38 @@ function AdminMenu() {
                   <button
                     type="button"
                     className="admin-btn"
-                    style={{ width: '100%', padding: '10px', fontSize: '0.95rem' }}
+                    style={{ width: 'auto', margin: 0, padding: '8px 16px', display: 'inline-flex', alignItems: 'center', gap: '5px' }}
                     onClick={() => document.getElementById('item-image-upload').click()}
                     disabled={uploading}
                   >
-                    {uploading ? 'Đang tải...' : 'Tải ảnh lên'}
+                    {uploading ? 'Đang tải...' : 'Chọn file ảnh'}
                   </button>
                   <input
                     type="text"
                     value={formData.image}
                     onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                    placeholder="Hoặc URL ảnh..."
-                    style={{ width: '100%', padding: '10px', fontSize: '0.9rem', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--border-color)', color: '#fff', borderRadius: '4px' }}
+                    placeholder="Hoặc nhập URL ảnh: https://..."
+                    style={{ flex: 1 }}
                   />
                 </div>
-
-                {/* Cột phải: Thông tin */}
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '16px' }}>
-
-              {/* Tên món */}
-
-              <div className="admin-form-group" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}> <label style={{ width: '200px' }}>Tên món (Tùy chọn nếu chỉ dùng ảnh)</label> <input style={{ flex: 1, height: '36px' }} type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} /> </div>
-
-              {/* Giá */}
-
-              <div className="admin-form-group" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}> <label style={{ width: '200px' }}>Giá (VNĐ) (Tùy chọn)</label> <input style={{ flex: 1, height: '36px' }} type="number" min="0" value={formData.price} onChange={(e) => setFormData({ ...formData, price: e.target.value })} /> </div>
-
-              {/* Ngôn ngữ */}
-
-              <div className="admin-form-group" style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}> <label style={{ width: '200px', paddingTop: '6px' }}>Ngôn ngữ</label>
-
-              <div style={{ flex: 1 }}>
-                <select
-                  style={{ width: '100%', height: '36px' }}
-                  value={formData.lang}
-                  onChange={(e) => handleLangChange(e.target.value)}
-                >
-                  <option value="VN">Tiếng Việt</option>
-                  <option value="EN">Tiếng Anh</option>
-                  <option value="BOTH">Cả hai (Tiếng Việt & Tiếng Anh)</option>
-                </select>
-
-                <div style={{ marginTop: '8px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <input
-                    type="checkbox"
-                    id="langBoth"
-                    checked={formData.lang === 'BOTH'}
-                    onChange={(e) => handleLangChange(e.target.checked ? 'BOTH' : 'VN')}
-                  />
-                  <label htmlFor="langBoth" style={{ margin: 0, fontWeight: 'normal' }}>
-                    Hiển thị cho cả 2 ngôn ngữ
-                  </label>
-                </div>
+                {formData.image && (
+                  <div style={{ marginTop: '10px' }}>
+                    <img src={formData.image} alt="Preview" style={{ maxHeight: '80px', borderRadius: '4px', border: '1px solid #ccc' }} />
+                    <button
+                      type="button"
+                      onClick={() => setFormData({ ...formData, image: '' })}
+                      style={{ marginLeft: '10px', padding: '4px 8px', background: 'red', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                    >
+                      Xóa ảnh
+                    </button>
+                  </div>
+                )}
               </div>
 
-              </div>
-
-              {/* Mô tả */}
-
-              <div className="admin-form-group" style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}> <label style={{ width: '200px', paddingTop: '6px' }}>Mô tả (không bắt buộc)</label> <textarea style={{ flex: 1, minHeight: '100px' }} value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} /> </div>
-
-              {/* Trạng thái + Button */}
-
-              <div className="admin-form-group" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}> <label style={{ width: '200px' }}>Trạng thái</label>
-
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <input
-                  type="checkbox"
-                  id="isHidden"
-                  checked={formData.isHidden}
-                  onChange={(e) => setFormData({ ...formData, isHidden: e.target.checked })}
-                />
-                <label htmlFor="isHidden" style={{float: 'left', margin: 0, fontWeight: 'normal' }}>
-                  Ẩn món này
-                </label>
-              </div>
-              </div>
-
-              </div>
-              </div>
-
-              <div className="admin-modal-actions" style={{ marginTop: '25px', borderTop: '1px solid var(--border-color)', paddingTop: '20px' }}>
-                <button type="button" className="admin-btn btn-cancel" onClick={() => setShowModal(false)} style={{ width: '100px' }}>Hủy</button>
-                <button type="submit" className="admin-btn" style={{ width: '120px' }} disabled={categoriesForLang.length === 0}>
-                  Lưu lại
+              <div className="admin-modal-actions">
+                <button type="button" className="admin-btn btn-cancel" onClick={() => setShowModal(false)}>Hủy</button>
+                <button type="submit" className="admin-btn" style={{ width: 'auto' }}>
+                  {isEdit ? 'Cập nhật' : 'Thêm mới'}
                 </button>
               </div>
             </form>

@@ -174,45 +174,63 @@ function AdminEvents() {
                   required
                 />
               </div>
+
+              <div className="admin-form-row">
+                <div className="admin-form-group">
+                  <label>Thời gian</label>
+                  <input
+                    type="text"
+                    value={formData.date}
+                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                    required
+                    placeholder="Ví dụ: 14/02/2025"
+                  />
+                </div>
+                <div className="admin-form-group">
+                  <label>Ngôn ngữ</label>
+                  <select value={formData.lang} onChange={(e) => setFormData({ ...formData, lang: e.target.value })}>
+                    <option value="VN">Tiếng Việt</option>
+                    <option value="EN">Tiếng Anh</option>
+                    <option value="BOTH">Cả hai</option>
+                  </select>
+                </div>
+              </div>
+
               <div className="admin-form-group">
-                <label>Thời gian</label>
-                <input
-                  type="text"
-                  value={formData.date}
-                  onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                  required
-                  placeholder="Ví dụ: 14/02/2025"
+                <label>Mô tả (không bắt buộc)</label>
+                <textarea
+                  rows="3"
+                  value={formData.description}
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  placeholder="Nhập đoạn mô tả ngắn về sự kiện..."
                 />
               </div>
-              <div className="admin-form-group">
-                <label>Ngôn ngữ</label>
-                <select value={formData.lang} onChange={(e) => setFormData({ ...formData, lang: e.target.value })}>
-                  <option value="VN">Tiếng Việt</option>
-                  <option value="EN">Tiếng Anh</option>
-                  <option value="BOTH">Cả hai (Tiếng Việt & Tiếng Anh)</option>
-                </select>
-                <div style={{ marginTop: '8px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <input 
-                    type="checkbox" 
-                    id="langBoth" 
-                    checked={formData.lang === 'BOTH'}
-                    onChange={(e) => setFormData({ ...formData, lang: e.target.checked ? 'BOTH' : 'VN' })}
-                  />
-                  <label htmlFor="langBoth" style={{ margin: 0, fontWeight: 'normal' }}>Hiển thị cho cả 2 ngôn ngữ</label>
+
+              <div className="admin-form-row">
+                <div className="admin-form-group">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <input 
+                      type="checkbox" 
+                      id="langBoth" 
+                      checked={formData.lang === 'BOTH'}
+                      onChange={(e) => setFormData({ ...formData, lang: e.target.checked ? 'BOTH' : 'VN' })}
+                    />
+                    <label htmlFor="langBoth" style={{ margin: 0, fontWeight: 'normal' }}>Hiển thị cho cả 2 ngôn ngữ</label>
+                  </div>
+                </div>
+                <div className="admin-form-group">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <input
+                      type="checkbox"
+                      id="isHidden"
+                      checked={formData.isHidden}
+                      onChange={(e) => setFormData({ ...formData, isHidden: e.target.checked })}
+                    />
+                    <label htmlFor="isHidden" style={{ margin: 0, fontWeight: 'normal' }}>Ẩn sự kiện này</label>
+                  </div>
                 </div>
               </div>
-              <div className="admin-form-group">
-                <label>Trạng thái</label>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <input
-                    type="checkbox"
-                    id="isHidden"
-                    checked={formData.isHidden}
-                    onChange={(e) => setFormData({ ...formData, isHidden: e.target.checked })}
-                  />
-                  <label htmlFor="isHidden" style={{ margin: 0, fontWeight: 'normal' }}>Ẩn sự kiện này</label>
-                </div>
-              </div>
+
               <div className="admin-form-group">
                 <label>Ảnh sự kiện (Tải ảnh lên hoặc nhập URL)</label>
                 <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
@@ -243,20 +261,22 @@ function AdminEvents() {
                 {formData.image && (
                   <div style={{ marginTop: '10px' }}>
                     <img src={formData.image} alt="Preview" style={{ maxHeight: '80px', borderRadius: '4px', border: '1px solid #ccc' }} />
+                    <button
+                      type="button"
+                      onClick={() => setFormData({ ...formData, image: '' })}
+                      style={{ marginLeft: '10px', padding: '4px 8px', background: 'red', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}
+                    >
+                      Xóa ảnh
+                    </button>
                   </div>
                 )}
               </div>
-              <div className="admin-form-group">
-                <label>Mô tả (không bắt buộc)</label>
-                <textarea
-                  rows="3"
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                />
-              </div>
+
               <div className="admin-modal-actions">
                 <button type="button" className="admin-btn btn-cancel" onClick={() => setShowModal(false)}>Hủy</button>
-                <button type="submit" className="admin-btn" style={{ width: 'auto' }}>Lưu lại</button>
+                <button type="submit" className="admin-btn" style={{ width: 'auto' }}>
+                  {isEdit ? 'Cập nhật' : 'Thêm mới'}
+                </button>
               </div>
             </form>
           </div>
